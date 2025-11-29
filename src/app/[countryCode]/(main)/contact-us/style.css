@@ -1,0 +1,246 @@
+.hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: 250px;
+    background: url("/images/contact-us-banner.jpg") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+}
+
+/* text + button container */
+.banner-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    max-width: 600px;
+}
+
+/* ---------- Wrapper Box ---------- */
+.contact-form-wrapper {
+    max-width: 750px;
+    background: #eef3ff;
+    padding: 40px;
+    border-radius: 12px;
+}
+
+.bordered:after {
+    left: 40px;
+}
+
+/* ---------- Title ---------- */
+.form-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000b5c;
+}
+
+.form-subtitle {
+    max-width: 650px;
+    font-size: 15px;
+    margin-top: 10px;
+    color: #444;
+}
+
+/* ---------- Form Layout ---------- */
+.contact-form {
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.form-row input,
+.form-row select,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    background: #fff;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+textarea:focus {
+    border-color: #0d6efd;
+}
+
+/* ---------- Phone Input Group ---------- */
+.phone-input {
+    display: flex;
+    gap: 8px;
+}
+
+.phone-input select {
+    max-width: 80px;
+}
+
+/* ---------- Textarea ---------- */
+textarea {
+    width: 100%;
+    height: 130px;
+    resize: none;
+}
+
+/* ---------- Terms ---------- */
+.terms-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.terms-row label {
+    font-size: 13px !important;
+    line-height: normal !important;
+    transform: none !important;
+}
+
+/* ---------- Submit Button ---------- */
+.submit-btn {
+    background: #e00000;
+    color: white;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #b70000;
+}
+
+/* wrap each field */
+.field {
+    width: 100%;
+}
+
+/* error text */
+.error-text {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+    text-align: left;
+}
+
+/* red border on error */
+.error-input {
+    border-color: red !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .terms-row {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+
+.contact-info h3 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.contact-info {
+    padding: 10px 0;
+}
+
+.bordered {
+    font-size: 22px;
+    font-weight: 600;
+    padding-bottom: 8px;
+    display: inline-block;
+}
+
+.contact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 8px 0;
+}
+
+.contact-link {
+    transition: 0.3s all ease;
+}
+
+.contact-link:hover {
+    color: #E50000
+}
+
+.contact-icon {
+    color: #E50000;
+    font-size: 22px;
+    min-width: 22px;
+    margin-top: 2px;
+}
+
+.opening-title {
+    margin-top: 24px;
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.opening-hours p {
+    margin: 2px 0;
+}
+
+.map-embed-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+.map-embed-inner {
+    width: 100%;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+}
+
+.map-iframe {
+    width: 100%;
+    height: 450px;
+    border: 0;
+    display: block;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .map-iframe {
+        height: 360px;
+    }
+}
