@@ -1,5 +1,6 @@
-.bg-blue {
-  background-color: #E6EDFF;
+.why-choose-us {
+  border: 1px solid #37A9DE;
+  border-radius: 6px;
 }
 
 .bg-gray {
@@ -10,7 +11,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #0033CC;
+  background-color: #37A9DE;
 }
 
 .video-wrapper {
@@ -66,15 +67,11 @@
 .market-content h4{
   margin-bottom: 0;
 }
-.red-line {
+.h-line {
   width: 50px;
   height: 6px;
-  background: #d40000;
+  background: #37A9DE;
   border-radius: 30px;
   display: block;
   margin: 0 auto 12px;
-}
-
-.products-section{
-  background: #E6EDFF;
 }

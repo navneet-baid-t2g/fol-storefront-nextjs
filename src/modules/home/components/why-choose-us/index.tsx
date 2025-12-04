@@ -37,7 +37,7 @@ export default function WhyChooseUs() {
     const toggleAccordion = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
     };
-    return <div className="bg-blue p-10 rounded-xl shadow-sm">
+    return <div className="why-choose-us p-10 rounded-xl shadow-sm">
         <h2 className="text-center">Why Choose Us?</h2>
 
 

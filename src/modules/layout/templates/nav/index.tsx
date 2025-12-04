@@ -5,6 +5,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import CartButton from "@modules/layout/components/cart-button"
 import { RiSearchLine, RiShoppingCartLine, RiUserLine } from "@remixicon/react"
 import SearchBar from "./search-bar"
+import TopBar from "./topbar-ticker"
 import MobileMenu from "./mobile-menu"
 export default async function Nav() {
   const regions = await listRegions().then((regions: StoreRegion[]) => regions)
@@ -14,13 +15,8 @@ export default async function Nav() {
       <div className="bg-white shadow-sm">
 
         {/* Top Notification Bar */}
-        <div className="topbar overflow-hidden whitespace-nowrap">
-          <div className="marquee inline-block">
-            FR302 range is 100 km, 50 km per sensor, and 2 sensors per controller •
-            FR302 range is 100 km, 50 km per sensor, and 2 sensors per controller •
-            FR302 range is 100 km, 50 km per sensor, and 2 sensors per controller •
-          </div>
-        </div>
+        <TopBar />
+
 
         {/* Header */}
         <header className="max-w-8xl mx-auto relative h-20 flex items-center px-3 xl:px-0">
@@ -46,7 +42,7 @@ export default async function Nav() {
             <div className="flex items-center gap-2">
               <RiUserLine />
               <LocalizedClientLink href="/account" className="text-sm">
-                Hello <br /> Sign In
+                Sign In
               </LocalizedClientLink>
             </div>
 

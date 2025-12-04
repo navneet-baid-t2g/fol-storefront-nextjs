@@ -56,7 +56,7 @@ export default function ExploreMarkets() {
                 </div>
 
                 <div className="market-content">
-                  <span className="red-line"></span>
+                  <span className="h-line"></span>
                   <h4>{m.title}</h4>
                 </div>
               </div>

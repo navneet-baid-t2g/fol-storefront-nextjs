@@ -55,7 +55,7 @@ export default function MobileMenu() {
             <div className="flex items-center gap-2">
               <RiUserLine />
               <LocalizedClientLink href="/account" className="text-sm">
-                Hello Sign In
+            Sign In
               </LocalizedClientLink>
             </div>
 

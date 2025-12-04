@@ -119,7 +119,7 @@ textarea {
 
 /* ---------- Submit Button ---------- */
 .submit-btn {
-    background: #e00000;
+    background: #20a7db;
     color: white;
     padding: 12px 28px;
     border: none;
@@ -130,7 +130,7 @@ textarea {
 }
 
 .submit-btn:hover {
-    background: #b70000;
+    background: #1a8fbd;
 }
 
 /* wrap each field */
@@ -193,11 +193,11 @@ textarea {
 }
 
 .contact-link:hover {
-    color: #E50000
+    color: #1a8fbd
 }
 
 .contact-icon {
-    color: #E50000;
+    color: #1a8fbd;
     font-size: 22px;
     min-width: 22px;
     margin-top: 2px;

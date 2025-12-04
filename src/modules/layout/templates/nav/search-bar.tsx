@@ -75,7 +75,6 @@ export default function SearchBar() {
           onClick={handleSearchButton}
           className="bg-red-600 text-white px-4 flex items-center gap-2 rounded-r-md text-sm hover:bg-red-700 transition"
         >
-          Search
           <RiSearchLine />
         </button>
       </div>

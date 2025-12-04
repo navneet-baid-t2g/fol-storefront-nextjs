@@ -3,9 +3,11 @@
 * {
     font-family: 'Poppins', sans-serif !important;
 }
+
 html {
     scroll-behavior: smooth;
 }
+
 h1,
 h2,
 h3,
@@ -51,22 +53,27 @@ section {
     padding-block: 50px;
 }
 
+.search-container {
+
+    border-radius: 6px;
+    border: 1px solid #D7D7D7;
+}
+
 .search-container input {
     flex: 1;
-    border: 1px solid #D7D7D7;
-    border-radius: 6px 0 0 6px;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     background: #F4F4F4;
     font-size: 0.875rem;
+    border: none;
     outline: none;
 }
 
 .search-container button {
-    background-color: #E50000;
-    color: white;
+    background: #F4F4F4;
+    color: #000000;
     padding-left: 1rem;
     padding-right: 1rem;
     display: flex;
@@ -82,8 +89,9 @@ section {
     height: 20px;
 }
 
+.search-container button:hover svg{ color: #ffffff;}
 .search-container button:hover {
-    background-color: #b91c1c;
+    background-color: #20a7db;
 }
 
 .hero-banner {
@@ -108,13 +116,13 @@ section {
     bottom: -8px;
     width: 80px;
     height: 6px;
-    background: #E50000;
+    background: #37A9DE;
     border-radius: 6px;
 }
 
 .topbar {
-    background-color: #F4F4F4;
-    color: #0033CC;
+    background-color: #37A9DE;
+    color: #ffffff;
     padding-block: 8px;
     text-align: center;
 }
@@ -124,19 +132,21 @@ section {
 }
 
 
-@media(max-width:768px){
-    
-.logo {
-    max-width: 200px
-}
+@media(max-width:768px) {
+
+    .logo {
+        max-width: 200px
+    }
 
 }
+
 nav.site-menu {
-    background: #0033CC !important;
+    background: #ffffff !important;
+    border-top: 1px solid #D7D7D7;
 }
 
 nav.site-menu ul li a {
-    color: #fff !important;
+    color: #000000 !important;
 }
 
 nav.site-menu ul li a {
@@ -160,29 +170,26 @@ nav.site-menu ul li a:hover::after {
     width: 100%;
 }
 
-.topbar {
-  background: #f4f4f4;
-  padding: 8px 0;
-}
-
 .marquee {
-  animation: marquee 40s linear infinite;
-  padding-left: 100%;
-  transition: 0.2s all ease;
+    animation: marquee 40s linear infinite;
+    padding-left: 100%;
+    transition: 0.2s all ease;
 }
 
 .marquee:hover {
-  animation-play-state: paused;
+    animation-play-state: paused;
 }
 
 @keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
 }
+
 
 .swiper-button-next,
 .swiper-button-prev {
@@ -226,20 +233,19 @@ nav.site-menu ul li a:hover::after {
 
 .swiper-pagination-bullet-active {
     opacity: 1;
-    background: #0033CC !important;
-    border-color: #0033CC !important;
+    background: #37A9DE !important;
+    border-color: #37A9DE !important;
 }
 
 
 footer {
-    background-color: #000B5C;
-    color: #fff;
+    color: #000000;
     padding: 60px 0 40px 0;
 }
 
 .footer {
-    background: #050b4a url("/images/isometric-squares.svg") center/cover no-repeat;
-    color: #fff;
+    background: #ffffff url("/images/isometric-squares.svg") center/cover no-repeat;
+    color: #000000;
 }
 
 .footer-container {
@@ -294,11 +300,18 @@ footer {
 }
 
 footer .icon {
-    font-size: 22px;
+    width: 28px;
+    height: 28px;
+    padding: 6px;
+    border-radius: 50%;
+    background-color: #37A9DE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 footer .icon svg {
-    color: #E50000;
+    color: #ffffff;
 }
 
 footer .social-links {
@@ -313,7 +326,7 @@ footer .social-links .social-link svg {
 }
 
 footer .social-links .social-link svg:hover {
-    color: #ff4d4d
+    color: #37A9DE
 }
 
 .footer-text {
@@ -339,7 +352,7 @@ footer .social-links .social-link svg:hover {
 
 .footer-links li:hover {
     opacity: 1;
-    color: #ff4d4d;
+    color: #37A9DE;
 }
 
 .footer-bottom {
@@ -352,8 +365,8 @@ footer .social-links .social-link svg:hover {
 }
 
 .bottom-footer {
-    background-color: #000841;
-    color: #fff;
+    background-color: #F4F4F4;
+    color: #000000;
 }
 
 .bottom-footer p {
@@ -380,21 +393,21 @@ footer .social-links .social-link svg:hover {
 }
 
 .btn-primary {
-    background: #E6EDFF;
-    border: 2px solid #0033CC;
+    background: #ffffff;
+    border: 2px solid #20A7DB;
     border-radius: 6px;
     padding: 10px 18px;
     transition: 0.2s all ease;
 }
 
 .btn-primary:hover {
-    background: #0033CC;
+    background: #20A7DB;
     color: #ffffff;
 }
 
 .btn-secondary {
-    background: #0033CC;
-    border: 2px solid #0033CC;
+    background: #20A7DB;
+    border: 2px solid #20A7DB;
     border-radius: 6px;
     padding: 10px 18px;
     transition: 0.2s all ease;
@@ -402,8 +415,8 @@ footer .social-links .social-link svg:hover {
 }
 
 .btn-secondary:hover {
-    background: #050b4a;
-    border: 2px solid #050b4a;
+    background: #1a8fbd;
+    border: 2px solid #1a8fbd;
     color: #ffffff;
     box-shadow: unset;
 }
@@ -415,35 +428,38 @@ footer .social-links .social-link svg:hover {
 }
 
 
-.product-card{
+.product-card {
     background: #ffffff;
-    border:1px solid #000B5C;
+    border: 1px solid #000B5C;
     border-radius: 6px;
 }
 
-.product-information{
-    padding:10px;
+.product-information {
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: start;
 }
-.product-image{
+
+.product-image {
     aspect-ratio: 1/1;
     object-fit: contain;
     background-color: #F4F4F4;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
-.product-model{
-    background: #0033CC;
+
+.product-model {
+    background: #37A9DE;
     color: #ffffff;
     border-radius: 6px;
     padding: 5px 10px;
 }
-.product-title{
+
+.product-title {
     font-size: 24px;
     font-weight: 600;
-    line-height: normal;  
+    line-height: normal;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;

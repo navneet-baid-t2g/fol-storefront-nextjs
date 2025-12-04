@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="max-w-8xl mb-16 mx-auto flex flex-col md:flex-row justify-between">
           <div>
             <LocalizedClientLink href="/">
-              <img src="/images/white-logo.png" alt="Fiber Optics Labs" className="footer-logo" />
+              <img src="/images/logo.png" alt="Fiber Optics Labs" className="footer-logo" />
             </LocalizedClientLink>
           </div>
           <div className="social-links mt-8 md:mt-0">
