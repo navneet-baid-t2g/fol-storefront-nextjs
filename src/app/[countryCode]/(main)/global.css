@@ -1,0 +1,501 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+}
+
+h1 {
+    font-size: 46px;
+}
+
+h2 {
+    font-size: 38px;
+}
+
+h3 {
+    font-size: 30px;
+}
+
+h4 {
+    font-size: 24px;
+}
+
+h5 {
+    font-size: 22px;
+}
+
+h6 {
+    font-size: 20px;
+}
+
+p {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 18px;
+    margin: 0 0 12px 0;
+}
+
+section {
+    padding-block: 50px;
+}
+
+.search-container {
+
+    border-radius: 6px;
+    border: 1px solid #D7D7D7;
+}
+
+.search-container input {
+    flex: 1;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background: #F4F4F4;
+    font-size: 0.875rem;
+    border: none;
+    outline: none;
+}
+
+.search-container button {
+    background: #F4F4F4;
+    color: #000000;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 16px;
+    transition: 0.2s ease;
+}
+
+.search-container button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.search-container button:hover svg{ color: #ffffff;}
+.search-container button:hover {
+    background-color: #20a7db;
+}
+
+.hero-banner {
+    padding: 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.bordered {
+    position: relative;
+    display: inline-block;
+}
+
+.bordered::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -8px;
+    width: 80px;
+    height: 6px;
+    background: #004fff;
+    border-radius: 6px;
+}
+
+.topbar {
+    background-color: #004fff;
+    color: #ffffff;
+    padding-block: 8px;
+    text-align: center;
+}
+
+.logo {
+    max-width: 250px
+}
+
+
+@media(max-width:768px) {
+
+    .logo {
+        max-width: 200px
+    }
+
+}
+
+nav.site-menu {
+    background: #ffffff !important;
+    border-top: 1px solid #D7D7D7;
+}
+
+nav.site-menu ul li a {
+    color: #000000 !important;
+}
+
+nav.site-menu ul li a {
+    position: relative;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+nav.site-menu ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease;
+}
+
+nav.site-menu ul li a:hover::after {
+    width: 100%;
+}
+
+.marquee {
+    animation: marquee 40s linear infinite;
+    padding-left: 100%;
+    transition: 0.2s all ease;
+}
+
+.marquee:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #000B5C !important;
+    width: 45px;
+    height: 45px;
+    background: #d9d9d9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.swiper-button-next svg,
+.swiper-button-prev svg {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background: #f1f1f1;
+}
+
+.swiper-pagination {
+    position: static !important;
+    margin-top: 12px;
+}
+
+.swiper-pagination-bullet {
+    position: static !important;
+    width: 15px !important;
+    height: 15px !important;
+    opacity: 0.6;
+}
+
+.swiper-pagination-bullet {
+    background: #D7D7D7 !important;
+    border-color: #B7B7B7 !important;
+    opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #004fff !important;
+    border-color: #004fff !important;
+}
+
+
+footer {
+    color: #000000;
+    padding: 60px 0 40px 0;
+}
+
+.footer {
+    background: #ffffff url("/images/isometric-squares.svg") center/cover no-repeat;
+    color: #000000;
+}
+
+.footer-container {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+}
+
+/* Large tablets + small desktops (max 1024px) */
+@media (max-width: 1024px) {
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+}
+
+/* Tablets (max 768px) */
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+/* Mobile (max 480px) */
+@media (max-width: 480px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+
+
+.footer-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.footer-col h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+footer .icon {
+    width: 28px;
+    height: 28px;
+    padding: 6px;
+    border-radius: 50%;
+    background-color: #004fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer .icon svg {
+    color: #ffffff;
+}
+
+footer .social-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+footer .social-links .social-link svg {
+    width: 32px;
+    height: 32px;
+}
+
+footer .social-links .social-link svg:hover {
+    color: #004fff
+}
+
+.footer-text {
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    font-size: 17px;
+    margin-bottom: 10px;
+    opacity: 0.9;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.footer-links li:hover {
+    opacity: 1;
+    color: #004fff;
+}
+
+.footer-bottom {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.footer-logo {
+    max-width: 350px;
+}
+
+.bottom-footer {
+    background-color: #F4F4F4;
+    color: #000000;
+}
+
+.bottom-footer p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.menu-icon {
+    background-color: #E50000;
+    border-radius: 50%;
+    color: #ffffff;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease;
+}
+
+.menu-icon svg {
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+}
+
+.btn-primary {
+    background: #ffffff;
+    border: 2px solid #20A7DB;
+    border-radius: 6px;
+    padding: 10px 18px;
+    transition: 0.2s all ease;
+}
+
+.btn-primary:hover {
+    background: #20A7DB;
+    color: #ffffff;
+}
+
+.btn-secondary {
+    background: #20A7DB;
+    border: 2px solid #20A7DB;
+    border-radius: 6px;
+    padding: 10px 18px;
+    transition: 0.2s all ease;
+    box-shadow: unset;
+}
+
+.btn-secondary:hover {
+    background: #1a8fbd;
+    border: 2px solid #1a8fbd;
+    color: #ffffff;
+    box-shadow: unset;
+}
+
+@media(max-width:767px) {
+    nav.site-menu {
+        display: none;
+    }
+}
+
+
+.product-card {
+    background: #ffffff;
+    border: 1px solid #000B5C;
+    border-radius: 6px;
+}
+
+.product-information {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.product-image {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    background-color: #F4F4F4;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.product-model {
+    background: #004fff;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 5px 10px;
+}
+
+.product-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.product-hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: 250px;
+    background: url("/images/sales-banner.png") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* overlay */
+.product-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+}
+
+/* text + button container */
+.product-banner-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    max-width: 600px;
+}

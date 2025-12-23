@@ -1,0 +1,191 @@
+.hero-banner {
+    position: relative;
+    width: 100%;
+    min-height: 360px;
+    background: url("/images/sales-banner.png") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+}
+
+/* text + button container */
+.banner-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    max-width: 600px;
+}
+
+/* heading */
+.banner-content h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* description */
+.banner-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+/* button */
+.banner-btn {
+    padding: 10px 24px;
+    font-size: 16px;
+    background: #20a7db;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.banner-btn:hover {
+    background: #1a8fbd;
+}
+
+/* ---------- Wrapper Box ---------- */
+.sales-form-wrapper {
+    max-width: 750px;
+    margin: 40px auto;
+    background: #eef3ff;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* ---------- Title ---------- */
+.form-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000b5c;
+}
+
+.form-subtitle {
+    max-width: 650px;
+    margin: 0 auto 30px;
+    font-size: 15px;
+    color: #444;
+}
+
+/* ---------- Form Layout ---------- */
+.sales-form {
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.form-row input,
+.form-row select,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    background: #fff;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+textarea:focus {
+    border-color: #0d6efd;
+}
+
+/* ---------- Phone Input Group ---------- */
+.phone-input {
+    display: flex;
+    gap: 8px;
+}
+
+.phone-input select {
+    max-width: 80px;
+}
+
+/* ---------- Textarea ---------- */
+textarea {
+    width: 100%;
+    height: 130px;
+    resize: none;
+}
+
+/* ---------- Terms ---------- */
+.terms-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+.terms-row label{
+  font-size: 13px !important;
+  line-height: normal !important;
+  transform: none !important;
+}
+
+/* ---------- Submit Button ---------- */
+.submit-btn {
+    background: #e00000;
+    color: white;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #b70000;
+}
+/* wrap each field */
+.field {
+  width: 100%;
+}
+
+/* error text */
+.error-text {
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+  text-align: left;
+}
+
+/* red border on error */
+.error-input {
+  border-color: red !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .terms-row {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}

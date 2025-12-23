@@ -1,0 +1,77 @@
+.why-choose-us {
+  border: 1px solid #004fff;
+  border-radius: 6px;
+}
+
+.bg-gray {
+  background-color: #F4F4F4;
+}
+
+.bullet {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #004fff;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.66%;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.video-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Background section */
+.markets-section {
+  background: linear-gradient(179.13deg,
+      rgba(0, 0, 0, 0.55) 0.76%,
+      rgba(0, 0, 0, 0) 99.27%),
+    url("/images/markets-bg.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Card */
+.market-card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 12px;
+  overflow: hidden;
+  box-shadow: 0px 5px 18px rgba(0, 0, 0, 0.15);
+  transition: 0.3s ease;
+}
+
+.market-img img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+}
+
+.market-content {
+  padding-block: 16px;
+  text-align: center;
+}
+.market-content h4{
+  margin-bottom: 0;
+}
+.h-line {
+  width: 50px;
+  height: 6px;
+  background: #004fff;
+  border-radius: 30px;
+  display: block;
+  margin: 0 auto 12px;
+}
