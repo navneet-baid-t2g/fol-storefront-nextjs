@@ -30,7 +30,7 @@ export default function ExploreMarkets() {
 
   return (
     <section className="markets-section px-3 xl:px-0">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8">
         <div className="section-header mb-10">
           <h2 className="bordered text-white">Explore Our Markets</h2>
         </div>

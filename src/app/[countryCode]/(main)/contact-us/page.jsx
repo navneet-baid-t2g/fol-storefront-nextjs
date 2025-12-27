@@ -151,7 +151,7 @@ export default function BecomeASalesPartner() {
         </div>
       </div>
 
-      <div className="max-w-8xl mx-auto px-3 lg:px-0">
+      <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8  ">
         <div className="flex flex-col lg:flex-row py-12 gap-12">
 
           {/* LEFT COLUMN (Form) */}
