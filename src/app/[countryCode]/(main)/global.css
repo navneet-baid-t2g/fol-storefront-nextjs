@@ -91,7 +91,7 @@ section {
 
 .search-container button:hover svg{ color: #ffffff;}
 .search-container button:hover {
-    background-color: #20a7db;
+    background-color: #004fff;
 }
 
 .hero-banner {
@@ -394,20 +394,20 @@ footer .social-links .social-link svg:hover {
 
 .btn-primary {
     background: #ffffff;
-    border: 2px solid #20A7DB;
+    border: 2px solid #004fff;
     border-radius: 6px;
     padding: 10px 18px;
     transition: 0.2s all ease;
 }
 
 .btn-primary:hover {
-    background: #20A7DB;
+    background: #004fff;
     color: #ffffff;
 }
 
 .btn-secondary {
-    background: #20A7DB;
-    border: 2px solid #20A7DB;
+    background: #004fff;
+    border: 2px solid #004fff;
     border-radius: 6px;
     padding: 10px 18px;
     transition: 0.2s all ease;
