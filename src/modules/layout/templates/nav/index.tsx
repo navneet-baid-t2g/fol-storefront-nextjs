@@ -21,7 +21,7 @@ export default async function Nav() {
         <TopBar />
 
         {/* Header */}
-        <header className="max-w-8xl mx-auto relative h-20 flex items-center px-3 xl:px-0">
+        <header className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8  relative h-20 flex items-center">
           {/* Mobile Menu */}
           <MobileMenu />
 
@@ -78,7 +78,7 @@ export default async function Nav() {
 
       {/* Desktop Menu */}
       <nav className="hidden xl:block site-menu sticky top-0 inset-x-0 z-40 text-sm">
-        <ul className="max-w-8xl mx-auto flex justify-between py-3 px-3 xl:px-0 uppercase tracking-wide text-ui-fg-subtle">
+        <ul className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8   flex justify-between py-3 uppercase tracking-wide text-ui-fg-subtle">
           <li>
             <LocalizedClientLink href="/">Home</LocalizedClientLink>
           </li>

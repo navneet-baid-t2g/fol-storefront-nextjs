@@ -15,7 +15,7 @@ export default function YoutubeVideos() {
   ]
   return (
     <section className="px-3 xl:px-0">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8">
         <div className="section-header mb-8">
           <h2 className="bordered">Explore Our Videos on Youtube</h2>
         </div>

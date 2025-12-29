@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <>
       <footer className="footer px-3 xl:px-0">
-        <div className="max-w-8xl mb-16 mx-auto flex flex-col md:flex-row justify-between">
+        <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8 mb-16 mx-auto flex flex-col md:flex-row justify-between">
           <div>
             <LocalizedClientLink href="/">
               <img src="/images/logo.png" alt="Fiber Optics Labs" className="footer-logo" />
@@ -19,7 +19,7 @@ export default function Footer() {
             <a href="#" className="social-link"><RiYoutubeLine /></a>
           </div>
         </div>
-        <div className="max-w-8xl footer-container">
+        <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8 footer-container">
           <div className="footer-col">
             <h3 className="footer-title">Get In Touch</h3>
 
@@ -89,7 +89,7 @@ export default function Footer() {
         </div>
       </footer>
       <div className="bottom-footer px-3 xl:px-0">
-        <div className="max-w-8xl mx-auto  text-center md:text-left md:flex justify-between items-center">
+        <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8    text-center md:text-left md:flex justify-between items-center">
           <p>© Fiber Optics Labs {new Date().getFullYear()}. All rights reserved.</p>
           <img src="/images/payments.png" alt="Payments Methods Accepted" className="mx-auto md:mx-0" />
         </div>

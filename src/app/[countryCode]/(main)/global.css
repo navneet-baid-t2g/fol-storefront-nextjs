@@ -89,7 +89,10 @@ section {
     height: 20px;
 }
 
-.search-container button:hover svg{ color: #ffffff;}
+.search-container button:hover svg {
+    color: #ffffff;
+}
+
 .search-container button:hover {
     background-color: #004fff;
 }
@@ -325,9 +328,9 @@ footer .social-links .social-link svg {
     height: 32px;
 }
 
-footer .social-links .social-link svg:hover {
+/* footer .social-links .social-link svg:hover {
     color: #004fff
-}
+} */
 
 .footer-text {
     font-size: 16px;
@@ -498,4 +501,130 @@ footer .social-links .social-link svg:hover {
     z-index: 2;
     color: white;
     max-width: 600px;
+}
+
+
+
+.market-content {
+    padding: 16px
+}
+
+.social-link {
+    background: #ebebeb;
+    border-radius: 50%;
+    color: #000B5C;
+    width: 36px;
+    height: 36px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease;
+}
+
+.social-link:nth-child(1) {
+    background: #1877F2;
+    color: #ffffff;
+}
+
+.social-link:nth-child(2) {
+    background: #000000;
+    color: #ffffff;
+}
+
+.social-link:nth-child(3) {
+    background: #0077B5;
+    color: #ffffff;
+}
+
+.social-link:nth-child(4) {
+    background: linear-gradient(90deg,
+            #feda75 0%,
+            #fa7e1e 25%,
+            #d62976 50%,
+            #962fbf 75%,
+            #4f5bd5 100%);
+    color: #ffffff;
+}
+
+.social-link:hover{
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+
+.social-link:nth-child(5) {
+    background: #FF0000;
+    color: #ffffff;
+}
+
+@media (min-width: 1200px) and (max-width: 1400px) {
+
+    header .btn-primary {
+        background: #fff;
+        border: 2px solid #004fff;
+        border-radius: 6px;
+        padding: 10px 14px;
+        transition: all .2s;
+        font-size: 12px;
+    }
+
+    header .text-sm {
+        font-size: 12px;
+    }
+
+    header button.h-full {
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    h2 {
+        font-size: 34px;
+    }
+
+    h3 {
+        font-size: 28px;
+    }
+
+    h4 {
+        font-size: 22px;
+    }
+
+    h5 {
+        font-size: 20px;
+    }
+
+    h6 {
+        font-size: 18px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    li {
+        font-size: 14px;
+    }
+
+    .footer-links li {
+        font-size: 14px;
+    }
+
+    .footer-title {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .footer-text {
+        font-size: 14px;
+    }
+
+    .bottom-footer p {
+        margin: 0;
+        font-size: 14px;
+    }
 }

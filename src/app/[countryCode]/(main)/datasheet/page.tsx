@@ -15,7 +15,7 @@ const Resources = () => {
         </div>
       </div>
 
-      <div className="flex flex-col small:flex-row small:items-start py-6 content-container">
+      <div className="flex flex-col small:flex-row small:items-start py-6 content-container mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8  ">
         <div className="w-full">
           <div className="w-full flex justify-between items-center border-b py-4">
             <h2 className="text-lg font-semibold">Product Name</h2>
