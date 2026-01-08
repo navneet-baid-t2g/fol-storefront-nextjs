@@ -8,12 +8,14 @@ import SearchBar from "./search-bar"
 import TopBar from "./topbar-ticker"
 import { cookies as nextCookies } from "next/headers"
 import MobileMenu from "./mobile-menu"
+import { listCategories } from "@lib/data/products"
+import Link from "next/link"
 export default async function Nav() {
   const regions = await listRegions().then((regions: StoreRegion[]) => regions)
   const cookies = await nextCookies()
   const email = cookies.get("email")?.value
   const name = email?.split("@")[0]
-
+  const { categories } = await listCategories()
   return (
     <>
       <div className="bg-white shadow-sm">
@@ -87,8 +89,61 @@ export default async function Nav() {
               Our Products
             </LocalizedClientLink>
           </li>
-          <li>
-            <LocalizedClientLink href="#">Installations</LocalizedClientLink>
+          <li className="relative group">
+            <LocalizedClientLink href="/">Installations</LocalizedClientLink>
+            <div
+              className="
+      absolute left-0 top-full 
+      hidden group-hover:block 
+      bg-white shadow-lg rounded-md w-80 py-3 z-50 
+      transition-all duration-200 
+      group-hover:mt-1
+    "
+            >
+              <ul className="flex flex-col gap-2 px-4 text-sm text-black">
+                {categories?.map((category: any, index: number) => (
+                  <li key={index}>
+                    <LocalizedClientLink
+                      href={`/installation/${category?.handle}`}
+                    >
+                      {category?.name}
+                    </LocalizedClientLink>
+                    {/* <Link
+                      key={category.id}
+                      href={`/in/installation/${category.handle}`}
+                      className={`block w-full text-left px-4 py-3 rounded transition text-sm font-medium ${"text-gray-700"}`}
+                    >
+                      {category.name}
+                    </Link> */}
+                  </li>
+                ))}
+                {/* <li>
+                  <LocalizedClientLink href="/installation/fence-and-buried-perimeter-security-hybrid">
+                    Fence and Buried Perimeter Security (Hybrid)
+                  </LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/installation/pipeline-security">
+                    Pipeline Security
+                  </LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/installation/data-cable-security">
+                    Data Cabel Security
+                  </LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/installation/wall-top-perimeter-security">
+                    Wall Top Perimeter Security
+                  </LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/installation/other-applications">
+                    Other Application
+                  </LocalizedClientLink>
+                </li> */}
+              </ul>
+            </div>
           </li>
           <li>
             <LocalizedClientLink href="#">Support</LocalizedClientLink>
@@ -130,7 +185,6 @@ export default async function Nav() {
                     <span className="text-gray-400 cursor-not-allowed">
                       Training
                     </span>
-                    
                   </LocalizedClientLink>
                 </li>
                 <li>
