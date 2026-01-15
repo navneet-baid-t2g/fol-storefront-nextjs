@@ -3,6 +3,7 @@
 import { Suspense, useState } from "react"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { RiMenuLine, RiCloseLine, RiUserLine, RiShoppingCartLine } from "@remixicon/react"
+import GetQuoteButton from "@modules/common/components/get-quote"
 import CartButton from "@modules/layout/components/cart-button"
 
 export default function MobileMenu() {
@@ -66,6 +67,9 @@ export default function MobileMenu() {
                 Cart
               </LocalizedClientLink>
             </div>
+          </div>
+          <div className="mt-10">
+            <GetQuoteButton />
           </div>
           {/* Bottom CTA */}
           <div className="mt-10">

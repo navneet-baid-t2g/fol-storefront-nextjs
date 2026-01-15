@@ -9,6 +9,8 @@ import HeroBanner from "@modules/home/components/hero-banner";
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 import LatestProducts from "@modules/home/components/latest-products";
+import OurInstallations from "@modules/home/components/our-installations";
+import InstalledSites from "@modules/home/components/installed-sites";
 
 export const metadata: Metadata = {
   title: "Fiber Optics Labs",
@@ -52,6 +54,8 @@ export default async function Home(props: {
           </div>
         </div>
       </section>
+      <OurInstallations/>
+      <InstalledSites/>
       <YoutubeVideos />
       <LatestProducts />                                                                                              
       <ExploreMarkets />
