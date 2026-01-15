@@ -9,6 +9,8 @@ import HeroBanner from "@modules/home/components/hero-banner";
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 import LatestProducts from "@modules/home/components/latest-products";
+import OurInstallations from "@modules/home/components/our-installations";
+import InstalledSites from "@modules/home/components/installed-sites";
 
 export const metadata: Metadata = {
   title: "Fiber Optics Labs",
@@ -35,7 +37,7 @@ export default async function Home(props: {
     <>
       <HeroBanner />
       <section className="px-3 xl:px-0">
-        <div className="max-w-8xl mx-auto">
+        <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8">
           <div className="section-header">
             <h2 className="bordered">Innovating Security</h2>
           </div>
@@ -52,6 +54,8 @@ export default async function Home(props: {
           </div>
         </div>
       </section>
+      <OurInstallations/>
+      <InstalledSites/>
       <YoutubeVideos />
       <LatestProducts />                                                                                              
       <ExploreMarkets />

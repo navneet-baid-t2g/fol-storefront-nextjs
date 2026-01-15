@@ -12,6 +12,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import ProductPrice from "../product-price"
 import MobileActions from "./mobile-actions"
 import { useRouter } from "next/navigation"
+import Cookies from "js-cookie"
 
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct
@@ -38,9 +39,12 @@ export default function ProductActions({
 
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
+  const [showLoginDialog, setShowLoginDialog] = useState(false)
   const countryCode = useParams().countryCode as string
 
   // If there is only 1 variant, preselect the options
+  const email = Cookies.get("email")
+
   useEffect(() => {
     if (product.variants?.length === 1) {
       const variantOptions = optionsAsKeymap(product.variants[0].options)
@@ -124,6 +128,12 @@ export default function ProductActions({
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return null
 
+    // Check if user is logged in
+    if (!email) {
+      setShowLoginDialog(true)
+      return
+    }
+
     setIsAdding(true)
 
     await addToCart({
@@ -133,6 +143,15 @@ export default function ProductActions({
     })
 
     setIsAdding(false)
+  }
+
+  const handleLoginRedirect = () => {
+    // Redirect to login page
+    router.push("/account")
+  }
+
+  const handleCloseDialog = () => {
+    setShowLoginDialog(false)
   }
 
   return (
@@ -194,6 +213,34 @@ export default function ProductActions({
           optionsDisabled={!!disabled || isAdding}
         />
       </div>
+
+      {/* Login Required Dialog */}
+      {showLoginDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
+            <h2 className="text-xl font-semibold mb-4">Login Required</h2>
+            <p className="text-gray-600 mb-6">
+              You can't add products to the cart before logging in. Please login first to continue.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <Button
+                onClick={handleCloseDialog}
+                variant="secondary"
+                className="px-4 py-2"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleLoginRedirect}
+                variant="primary"
+                className="px-4 py-2"
+              >
+                Login
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

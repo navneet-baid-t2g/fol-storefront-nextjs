@@ -5,6 +5,7 @@ import medusaError from "@lib/util/medusa-error"
 import { HttpTypes } from "@medusajs/types"
 import { revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
+import {  cookies as nextCookies } from "next/headers"
 import {
   getAuthHeaders,
   getCacheOptions,
@@ -13,6 +14,7 @@ import {
   removeAuthToken,
   removeCartId,
   setAuthToken,
+  setCustomerEmail,
 } from "./cookies"
 
 export const retrieveCustomer =
@@ -75,6 +77,7 @@ export async function signup(_currentState: unknown, formData: FormData) {
     })
 
     await setAuthToken(token as string)
+    await setCustomerEmail(customerForm?.email)
 
     const headers = {
       ...(await getAuthHeaders()),
@@ -113,6 +116,7 @@ export async function login(_currentState: unknown, formData: FormData) {
       .login("customer", "emailpass", { email, password })
       .then(async (token) => {
         await setAuthToken(token as string)
+        await setCustomerEmail(email)
         const customerCacheTag = await getCacheTag("customers")
         revalidateTag(customerCacheTag)
       })
@@ -129,7 +133,10 @@ export async function login(_currentState: unknown, formData: FormData) {
 
 export async function signout(countryCode: string) {
   await sdk.auth.logout()
-
+  const cookies = await nextCookies()
+  await cookies.set("email", "", {
+    maxAge: -1,
+  })
   await removeAuthToken()
 
   const customerCacheTag = await getCacheTag("customers")

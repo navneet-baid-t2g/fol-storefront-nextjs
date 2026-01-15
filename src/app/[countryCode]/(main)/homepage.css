@@ -1,5 +1,5 @@
 .why-choose-us {
-  border: 1px solid #37A9DE;
+  border: 1px solid #0a1eb8;
   border-radius: 6px;
 }
 
@@ -11,7 +11,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #37A9DE;
+  background-color: #0a1eb8;
 }
 
 .video-wrapper {
@@ -70,7 +70,7 @@
 .h-line {
   width: 50px;
   height: 6px;
-  background: #37A9DE;
+  background: #0a1eb8;
   border-radius: 30px;
   display: block;
   margin: 0 auto 12px;

@@ -2,7 +2,8 @@ import { clx } from "@medusajs/ui"
 
 import { getProductPrice } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
-
+import Cookies from "js-cookie"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 export default function ProductPrice({
   product,
   variant,
@@ -14,7 +15,7 @@ export default function ProductPrice({
     product,
     variantId: variant?.id,
   })
-
+  const email = Cookies.get("email")
   const selectedPrice = variant ? variantPrice : cheapestPrice
 
   if (!selectedPrice) {
@@ -33,7 +34,16 @@ export default function ProductPrice({
           data-testid="product-price"
           data-value={selectedPrice.calculated_price_number}
         >
-          {selectedPrice.calculated_price}
+          {email ? (
+            selectedPrice.calculated_price
+          ) : (
+            <LocalizedClientLink
+              href="/account"
+              className="text-sm text-gray-500"
+            >
+              Sign in to view the price
+            </LocalizedClientLink>
+          )}
         </span>
       </span>
       {selectedPrice.price_type === "sale" && (

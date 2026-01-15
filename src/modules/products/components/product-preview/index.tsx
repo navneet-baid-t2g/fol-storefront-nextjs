@@ -40,7 +40,7 @@ export default async function ProductPreview({
         />
       )}
       <div className="product-information">
-        <span className="product-model">Model: FOL-101</span>
+        {/* <span className="product-model">Model: FOL-101</span> */}
         <h3 className="mt-4 mb-0 product-title">{product.title}</h3>
       </div>
     </LocalizedClientLink>

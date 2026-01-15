@@ -1,22 +1,21 @@
-"use client";
+"use client"
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Navigation, Pagination } from "swiper/modules"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
 
 export default function YoutubeVideos() {
-  const videos = [
+  const videos1 = [
     "https://www.youtube.com/embed/tgbNymZ7vqY",
     "https://www.youtube.com/embed/tgbNymZ7vqY",
     "https://www.youtube.com/embed/tgbNymZ7vqY",
     "https://www.youtube.com/embed/tgbNymZ7vqY",
-  ];
-
+  ]
   return (
     <section className="px-3 xl:px-0">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8">
         <div className="section-header mb-8">
           <h2 className="bordered">Explore Our Videos on Youtube</h2>
         </div>
@@ -34,7 +33,7 @@ export default function YoutubeVideos() {
           }}
           className="youtube-swiper"
         >
-          {videos.map((src, index) => (
+          {videos1.map((src, index) => (
             <SwiperSlide key={index}>
               <div className="video-wrapper">
                 <iframe
@@ -48,5 +47,5 @@ export default function YoutubeVideos() {
         </Swiper>
       </div>
     </section>
-  );
+  )
 }

@@ -1,5 +1,9 @@
 import React, { Suspense } from "react"
-
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Navigation, Pagination } from "swiper/modules"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
 import ImageGallery from "@modules/products/components/image-gallery"
 import ProductActions from "@modules/products/components/product-actions"
 import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
@@ -12,6 +16,7 @@ import { HttpTypes } from "@medusajs/types"
 
 import ProductActionsWrapper from "./product-actions-wrapper"
 import { Heading } from "@medusajs/ui"
+import YoutubeVideos from "@modules/home/components/youtube-videos/productVideos"
 
 type ProductTemplateProps = {
   product: HttpTypes.StoreProduct
@@ -63,6 +68,20 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
           <ProductTabs product={product} />
         </div>
+      </div>
+      <div
+        className="content-container my-16 small:my-32"
+        data-testid="related-products-container"
+      >
+        <Suspense fallback={<SkeletonRelatedProducts />}>
+          <YoutubeVideos
+            videos={
+              product?.metadata?.media_links
+                ? product?.metadata?.media_links
+                : []
+            }
+          />
+        </Suspense>
       </div>
       <div
         className="content-container my-16 small:my-32"

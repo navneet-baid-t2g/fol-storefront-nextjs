@@ -57,7 +57,7 @@ function getImagesForVariant(
   selectedVariantId?: string
 ) {
   if (!selectedVariantId || !product.variants) {
-    return product.images
+    return product?.images
   }
 
   const variant = product.variants!.find((v) => v.id === selectedVariantId)

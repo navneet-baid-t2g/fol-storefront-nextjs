@@ -6,6 +6,11 @@ import Refresh from "@modules/common/icons/refresh"
 
 import Accordion from "./accordion"
 import { HttpTypes } from "@medusajs/types"
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 type ProductTabsProps = {
   product: HttpTypes.StoreProduct
@@ -22,6 +27,13 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
       component: <ShippingInfoTab />,
     },
   ]
+    const videos = [
+    "https://www.youtube.com/embed/tgbNymZ7vqY",
+    "https://www.youtube.com/embed/tgbNymZ7vqY",
+    "https://www.youtube.com/embed/tgbNymZ7vqY",
+    "https://www.youtube.com/embed/tgbNymZ7vqY",
+  ];
+
 
   return (
     <div className="w-full">
@@ -37,6 +49,7 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
           </Accordion.Item>
         ))}
       </Accordion>
+ 
     </div>
   )
 }

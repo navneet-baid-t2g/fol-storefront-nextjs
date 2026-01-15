@@ -58,6 +58,15 @@ export const setAuthToken = async (token: string) => {
     secure: process.env.NODE_ENV === "production",
   })
 }
+export async function setCustomerEmail(email: string) {
+  const cookies = await nextCookies()
+  cookies.set("email", email, {
+    httpOnly: false,
+    secure: true,
+    sameSite: "lax",
+    path: "/",
+  })
+}
 
 export const removeAuthToken = async () => {
   const cookies = await nextCookies()
