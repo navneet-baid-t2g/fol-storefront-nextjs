@@ -11,20 +11,40 @@ import "swiper/css/pagination";
 export default function ExploreMarkets() {
   const markets = [
     {
-      title: "Pipeline Security against theft or damage",
-      img: "/images/pipeline.png",
-    },
-    {
       title: "Airport Perimeter Security",
-      img: "/images/airports.png",
+      img: "/images/AirportPerimeter.webp",
     },
     {
-      title: "Border Perimeter Security",
-      img: "/images/border.png",
+      title: "Chemical Plant Perimeter Security",
+      img: "/images/ChemicalPlant.webp",
     },
     {
-      title: "Solar Farms Perimeter Security",
-      img: "/images/solar.png",
+      title: "Correctional Facility Perimeter Security",
+      img: "/images/CorrectionalFacility.webp",
+    },
+    {
+      title: "Data Center Physical Security",
+      img: "/images/DataCenters.webp",
+    },
+    {
+      title: "Data Network Physical security",
+      img: "/images/DataNetwork.webp",
+    },
+    {
+      title: "Electric Utility Perimeter Security",
+      img: "/images/ElectricUtility.webp",
+    },
+    {
+      title: "Nuclear Power Plant Perimeter Security",
+      img: "/images/NuclearPowerPlant.webp",
+    },
+    {
+      title: "Oil Depot Perimeter Security",
+      img: "/images/OilDepot.webp",
+    },
+    {
+      title: "Pipeline Security and TPI Monitoring",
+      img: "/images/Pipelines.webp",
     },
   ];
 
