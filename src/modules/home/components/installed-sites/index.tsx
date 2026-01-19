@@ -26,7 +26,7 @@ const INSTALLED_SITES = [
   },
   {
     title: "Metros",
-    image: "images/Airports.webp",
+    image: "images/Metro-Depot.webp",
     alt: "Metros",
   },
   {

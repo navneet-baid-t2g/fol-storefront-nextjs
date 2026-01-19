@@ -253,6 +253,11 @@ nav.site-menu ul li a:hover::after {
 }
 
 
+.hero-image{
+    width: 100%;
+}
+
+
 footer {
     color: #000000;
     padding: 60px 0 40px 0;
