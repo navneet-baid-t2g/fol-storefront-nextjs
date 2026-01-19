@@ -1,21 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useParams } from "next/navigation"
-import { getRegionId } from "@lib/get-region"
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL!
-const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY!
-
-type Product = {
-  id: string
-  title: string
-}
+import { sdk } from "@lib/config"
+import { HttpTypes } from "@medusajs/types"
 
 export default function QuoteForm() {
-  const { countryCode } = useParams()
-
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<HttpTypes.StoreProduct[]>([])
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
 
@@ -31,20 +21,11 @@ export default function QuoteForm() {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const regionId = await getRegionId(countryCode as string)
-
-        const res = await fetch(
-          `${BACKEND_URL}/store/products?region_id=${regionId}&fields=id,title&limit=100`,
-          {
-            headers: {
-              "x-publishable-api-key": PUBLISHABLE_KEY,
-            },
-            cache: "no-store",
-          }
-        )
-
-        const data = await res.json()
-        setProducts(data.products || [])
+        const { products: fetched } = await sdk.store.product.list({
+          limit: 100,
+          fields: "id,title",
+        })
+        setProducts(fetched || [])
       } catch (err) {
         console.error("Failed to load products", err)
       } finally {
@@ -53,7 +34,7 @@ export default function QuoteForm() {
     }
 
     loadProducts()
-  }, [countryCode])
+  }, [])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
