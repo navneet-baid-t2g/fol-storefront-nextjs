@@ -7,7 +7,7 @@ import { Metadata } from "next"
 type Props = {
   params: { id: string; countryCode: string }
 }
-
+export const dynamic = 'force-dynamic'
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = await getCategoryByHandle([params.id])
   if (!category) return { title: "Category Not Found" }

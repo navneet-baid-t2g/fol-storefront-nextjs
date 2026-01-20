@@ -93,7 +93,9 @@ export default async function Nav() {
 
             <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-64 py-3 z-50">
               <ul className="flex flex-col gap-2 px-4 text-sm text-black">
-                {installationCategories.map((category: any) => (
+                {installationCategories
+                .filter((category: any) => !category.parent_category_id)  // ✅ ONLY PARENTS
+                .map((category: any) => (
                   <li key={category.id}>
                     <LocalizedClientLink
                       href={`/installation/${category.handle}`}
@@ -103,6 +105,7 @@ export default async function Nav() {
                     </LocalizedClientLink>
                   </li>
                 ))}
+
               </ul>
             </div>
           </li>
