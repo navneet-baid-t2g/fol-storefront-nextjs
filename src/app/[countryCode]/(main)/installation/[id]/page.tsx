@@ -1,108 +1,136 @@
-import { listCategories, listProductsByCategoryHandle } from "@lib/data/products"
+import { listCategories, getCategoryByHandle } from "@lib/data/categories"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Metadata } from "next"
 
 type Props = {
-  params: { id: string; countryCode: string }
-  searchParams: { page?: string }
-}
-
-type CategoryMetadata = {
-  description?: string
-  children?: Array<{
+  params: Promise<{
     id: string
-    name: string
-    description?: string
-    image?: string
+    countryCode: string
   }>
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { response } = await listProductsByCategoryHandle({
-    categoryHandle: params.id,
-    countryCode: params.countryCode,
-    pageParam: 1,
-    queryParams: { limit: 1 },
-  })
+/* ---------------- METADATA ---------------- */
 
-  if (!response.category) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params   // ✅ REQUIRED
+
+  const category = await getCategoryByHandle([id])
+
+  if (!category) {
     return { title: "Category Not Found" }
   }
 
-  const metadata = response.category.metadata as CategoryMetadata
   return {
-    title: response.category.name,
+    title: category.name,
     description:
-      metadata?.description || `Browse our ${response.category.name} applications`,
+      category.description || `Browse ${category.name} applications`,
   }
 }
 
+/* ---------------- PAGE ---------------- */
+
 export default async function Installation({ params }: Props) {
-  const { categories } = await listCategories()
-  const { response } = await listProductsByCategoryHandle({
-    categoryHandle: params.id,
-    countryCode: params.countryCode,
-    pageParam: 1,
-    queryParams: { limit: 50 },
-  })
+  const { id, countryCode } = await params   // ✅ REQUIRED
 
-  if (!response.category) notFound()
+  // Sidebar categories
+  const categories = await listCategories()
 
-  const activeCategory = response.category
-  const categoryMetadata = activeCategory.metadata as CategoryMetadata
-  const children = categoryMetadata?.children || []
+  // Active category
+  const activeCategory = await getCategoryByHandle([id])
+  if (!activeCategory) notFound()
+
+  const children = activeCategory.category_children || []
 
   return (
     <>
-      {/* Hero Banner */}
-      <div className="product-hero-banner relative h-64 bg-gradient-to-r from-gray-900 to-gray-700 overflow-hidden">
-        <div className="product-banner-overlay absolute inset-0 bg-black bg-opacity-40"></div>
-        <div className="product-banner-content relative h-full flex items-center justify-center">
-          <h1 className="text-5xl font-bold text-white">{activeCategory.name}</h1>
+      {/* Hero */}
+      <div className="relative h-64 bg-gradient-to-r from-gray-900 to-gray-700">
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative h-full flex items-center justify-center">
+          <h1 className="text-5xl font-bold text-white">
+            {activeCategory.name}
+          </h1>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Sidebar - Categories */}
-          <div className="lg:col-span-3">
+
+          {/* Sidebar */}
+          <aside className="lg:col-span-3">
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold text-blue-600 mb-4">Applications</h2>
+              <h2 className="text-xl font-bold mb-4">Applications</h2>
+
               <nav className="space-y-2">
-                {categories.map((category) => (
-                  <Link
-                    key={category.id}
-                    href={`/${params.countryCode}/installation/${category.handle}`}
-                    className={`block w-full text-left px-4 py-3 rounded transition text-sm font-medium ${
-                      activeCategory.id === category.id
-                        ? "bg-blue-600 text-white"
-                        : "text-gray-700 hover:bg-gray-100"
-                    }`}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
+                {categories
+                  .filter(cat => !cat.parent_category)
+                  .map(category => {
+                    const isActive = category.id === activeCategory.id
+
+                    return (
+                      <Link
+                        key={category.id}
+                        href={`/${countryCode}/installation/${category.handle}`}
+                        className={`block px-4 py-3 rounded text-sm font-medium
+                          ${isActive
+                            ? "bg-blue-600 text-white"
+                            : "bg-gray-50 text-gray-700"
+                          }`}
+                      >
+                        {category.name}
+                      </Link>
+                    )
+                  })}
               </nav>
             </div>
-          </div>
+          </aside>
 
-          {/* Main Content - Children */}
-          <div className="lg:col-span-9 space-y-8">
+          {/* Main */}
+          <main className="lg:col-span-9 space-y-8">
             {children.length > 0 ? (
-              children.map((child) => (
-                <div key={child.id} className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-2xl font-semibold text-gray-900">{child.name}</h3>
-                  {child.description && <p className="mt-2 text-gray-700">{child.description}</p>}
-                  {child.image && (
-                    <img src={child.image} alt={child.name} className="mt-4 w-full rounded-lg shadow-md" />
-                  )}
-                </div>
+              children.map(child => (
+                <section
+                  key={child.id}
+                  className="bg-white rounded-lg shadow-md p-8"
+                >
+                  {/* Child title */}
+                  <h2 className="text-2xl font-bold text-blue-600 mb-6">
+                    {child.name}
+                  </h2>
+
+                  {/* Image + description */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <img
+                      src={
+                        child.metadata?.image ||
+                        "/images/category-placeholder.webp"
+                      }
+                      alt={child.name}
+                      className="w-full rounded-lg object-cover"
+                    />
+
+                    <p className="text-gray-700 leading-relaxed">
+                      {child.description}
+                    </p>
+                  </div>
+
+                  {/* Full-width product link */}
+                  <Link
+                    href={`/${countryCode}/installation/${child.handle}`}
+                    className="block w-full text-center px-6 py-3 rounded-md
+                               bg-blue-600 text-white font-semibold hover:bg-blue-700"
+                  >
+                    View Products →
+                  </Link>
+                </section>
               ))
             ) : (
-              <p className="text-gray-500">No applications found for this category.</p>
+              <p className="text-gray-500">
+                No applications found under this category.
+              </p>
             )}
-          </div>
+          </main>
         </div>
       </div>
     </>
