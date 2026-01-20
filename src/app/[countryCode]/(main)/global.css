@@ -714,6 +714,7 @@ footer .social-links .social-link svg {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 6px;
 }
 
 /* Marker style */

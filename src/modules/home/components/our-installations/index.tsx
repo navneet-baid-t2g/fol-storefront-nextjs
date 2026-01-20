@@ -5,7 +5,11 @@ export default function OurInstallations() {
         <div className="section-header mb-8">
           <h2 className="bordered">Our Installations</h2>
         </div>
-        <div className="map-wrapper">
+        <div className="">
+          <img src="images/Installations-on-World-Map.webp" alt="World Map" className="world-map" />
+        </div>
+
+        {/* <div className="map-wrapper">
           <img src="images/contact-us-world-wide-locations.webp" alt="World Map" className="world-map" />
 
           <span className="marker us">UNITED STATES</span>
@@ -21,7 +25,7 @@ export default function OurInstallations() {
           <span className="marker india">INDIA</span>
 
           <span className="marker south-africa">SOUTH AFRICA</span>
-        </div>
+        </div> */}
       </div>
     </section>
   )

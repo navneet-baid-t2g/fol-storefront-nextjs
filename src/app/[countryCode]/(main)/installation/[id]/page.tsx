@@ -7,10 +7,13 @@ import { Metadata } from "next"
 type Props = {
   params: { id: string; countryCode: string }
 }
-export const dynamic = 'force-dynamic'
+
+export const dynamic = "force-dynamic"
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = await getCategoryByHandle([params.id])
   if (!category) return { title: "Category Not Found" }
+
   return {
     title: category.name,
     description: category.description || `Browse ${category.name} applications`,
@@ -24,14 +27,15 @@ export default async function Installation({ params }: Props) {
 
   const children = activeCategory.category_children || []
 
-  // ✅ Get ALL parent products once (efficient)
   const parentProducts = await listProducts({
     category_id: [activeCategory.id],
-    limit: children.length || 5,  // Match number of children
+    limit: children.length || 5,
     countryCode: params.countryCode,
   })
-  
+
   const allProducts = parentProducts?.response?.products || []
+
+  const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
 
   return (
     <>
@@ -39,14 +43,16 @@ export default async function Installation({ params }: Props) {
       <div className="relative h-64 bg-gradient-to-r from-gray-900 to-gray-700">
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative h-full flex items-center justify-center">
-          <h1 className="text-5xl font-bold text-white">{activeCategory.name}</h1>
+          <h1 className="text-5xl font-bold text-white">
+            {activeCategory.name}
+          </h1>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {/* Sidebar - SAME */}
+          {/* Sidebar */}
           <aside className="lg:col-span-3">
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-bold mb-4">Applications</h2>
@@ -70,27 +76,40 @@ export default async function Installation({ params }: Props) {
             </div>
           </aside>
 
-          {/* Main Content - FIXED */}
+          {/* Main Content */}
           <main className="lg:col-span-9 space-y-10">
             {children.length > 0 ? (
               children.map((child, index) => {
-                // ✅ Assign product by child index/rank (UNIQUE!)
-                const productIndex = child.rank || index
+                const productIndex = child.rank ?? index
                 const product = allProducts[productIndex] || allProducts[0]
 
+                const imageUrl =
+                  product?.thumbnail ||
+                  (product?.images?.[0]?.url?.startsWith("http")
+                    ? product.images[0].url
+                    : product?.images?.[0]?.url
+                    ? `${BACKEND_URL}${product.images[0].url}`
+                    : "/images/product-placeholder.webp")
+
                 return (
-                  <section key={child.id} className="bg-white rounded-lg shadow-md p-8">
-                    <h2 className="text-2xl font-bold text-blue-600 mb-6">{child.name}</h2>
-                    
+                  <section
+                    key={child.id}
+                    className="bg-white rounded-lg shadow-md p-8"
+                  >
+                    <h2 className="text-2xl font-bold text-blue-600 mb-6">
+                      {child.name}
+                    </h2>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <img
-                        src={product?.thumbnail || "/images/product-placeholder.webp"}
-                        alt={`${child.name} - ${product?.title || 'Featured Product'}`}
+                        src={imageUrl}
+                        alt={`${child.name} - ${product?.title || "Featured Product"}`}
                         className="w-full h-64 rounded-lg object-cover bg-gray-200"
                       />
+
                       <p className="text-gray-700 leading-relaxed">
-                          {child.description}
-                        </p>
+                        {child.description}
+                      </p>
                     </div>
 
                     {product ? (
@@ -101,13 +120,17 @@ export default async function Installation({ params }: Props) {
                         View {product.title} →
                       </Link>
                     ) : (
-                      <p className="text-gray-500 text-center py-4">No products available.</p>
+                      <p className="text-gray-500 text-center py-4">
+                        No products available.
+                      </p>
                     )}
                   </section>
                 )
               })
             ) : (
-              <p className="text-gray-500">No applications found under this category.</p>
+              <p className="text-gray-500">
+                No applications found under this category.
+              </p>
             )}
           </main>
         </div>
