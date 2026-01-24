@@ -22,3 +22,10 @@ export type StoreFreeShippingPrice = StorePrice & {
   target_remaining: number
   remaining_percentage: number
 }
+
+export type CategoryImage = {
+  id?: string
+  url: string
+  type: "thumbnail" | "image"
+  category_id?: string
+}
