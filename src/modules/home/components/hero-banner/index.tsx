@@ -10,6 +10,12 @@ export default function HeroBanner() {
   const slides = [
     "/images/banner-1.png",
     "/images/banner-2.png",
+    "/images/banner-3.jpeg",
+    "/images/banner-4.jpeg",
+    "/images/banner-5.jpeg",
+    "/images/banner-6.jpeg",
+    "/images/banner-7.jpeg",
+    "/images/banner-8.jpeg",
   ];
 
   return (
