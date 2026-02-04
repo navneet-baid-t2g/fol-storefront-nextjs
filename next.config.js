@@ -18,6 +18,9 @@ const nextConfig = {
       fullUrl: true,
     },
   },
+  images: {
+    domains: ['api.fols.in'],
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
