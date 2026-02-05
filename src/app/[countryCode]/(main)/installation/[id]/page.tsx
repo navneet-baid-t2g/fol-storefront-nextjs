@@ -133,9 +133,7 @@ export default async function Installation({ params }: Props) {
 
                   
                   <div className="mb-10 px-4">
-                    <div className="prose prose-lg max-w-2xl mx-auto text-gray-700
-                                    prose-ul:list-disc prose-ul:pl-6
-                                    prose-ol:list-decimal prose-li:marker:text-gray-500">
+                    <div className="markdown">
                       <ReactMarkdown>{child.description}</ReactMarkdown>
                     </div>
                   </div>

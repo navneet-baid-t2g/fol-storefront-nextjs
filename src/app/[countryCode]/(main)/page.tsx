@@ -18,10 +18,12 @@ export const metadata: Metadata = {
     "Site Developed by Tech2globe",
 }
 
-export default async function Home(props: {
-  params: Promise<{ countryCode: string }>
+export default async function Home({
+  params,
+}: {
+  params: { countryCode: string }
 }) {
-  const params = await props.params
+  
   const { countryCode } = params
 
   const region = await getRegion(countryCode)
