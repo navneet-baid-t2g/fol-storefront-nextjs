@@ -8,7 +8,7 @@ import SearchBar from "./search-bar"
 import TopBar from "./topbar-ticker"
 import { cookies as nextCookies } from "next/headers"
 import MobileMenu from "./mobile-menu"
-import { listCategories } from "@lib/data/products"
+import { listCategories, listProducts } from "@lib/data/products"
 import GetQuoteButton from "@modules/common/components/get-quote"
 
 export default async function Nav() {
@@ -18,6 +18,18 @@ export default async function Nav() {
   const name = email?.split("@")[0]
 
   const { categories: installationCategories } = await listCategories()
+  
+  // Fetch products - using the first region's ID
+  const { response: productsResponse } = await listProducts({
+    regionId: regions[0]?.id,
+    queryParams: { limit: 50 }, // Limit to 50 products for dropdown performance
+  })
+
+  const parentInstallations = installationCategories.filter(
+  (category: any) => !category.parent_category_id
+)
+
+const firstInstallation = parentInstallations[0]
 
   return (
     <>
@@ -25,7 +37,10 @@ export default async function Nav() {
         <TopBar />
 
         <header className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8 relative h-20 flex items-center">
-          <MobileMenu />
+          <MobileMenu
+            products={productsResponse.products}
+            installationCategories={installationCategories}
+          />
 
           {/* Logo */}
           <div className="flex-1 flex items-center justify-start pl-12 xl:pl-0 xl:justify-start">
@@ -69,7 +84,8 @@ export default async function Nav() {
 
             <LocalizedClientLink
               href="/become-a-sales-partner"
-              className="btn-primary hidden xl:block"
+              className="hidden xl:flex items-center justify-center px-[18px] py-[10px] text-sm rounded-[6px] border border-gray-300 hover:border-[#0a1eb8] transition whitespace-nowrap"
+
             >
               Become a Sales Partner
             </LocalizedClientLink>
@@ -78,20 +94,42 @@ export default async function Nav() {
       </div>
 
       {/* Desktop Menu */}
-      <nav className="hidden xl:block site-menu sticky top-0 inset-x-0 z-40 text-sm">
+      <nav className="hidden xl:block site-menu sticky top-0 inset-x-0 z-40 text-sm border-b border-gray-200 bg-white">
         <ul className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8 flex justify-between py-3 uppercase tracking-wide text-ui-fg-subtle">
           <li>
             <LocalizedClientLink href="/">Home</LocalizedClientLink>
           </li>
-          <li>
-            <LocalizedClientLink href="/store">Our Products</LocalizedClientLink>
+          <li className="relative group">
+            <LocalizedClientLink href="/store">
+              Products
+            </LocalizedClientLink>
+
+            {/* Products Dropdown */}
+            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1 max-h-96 overflow-y-auto">
+              <ul className="flex flex-col gap-2 px-4 text-sm text-black">
+                {productsResponse.products.map((product: any) => (
+                  <li key={product.id}>
+                    <LocalizedClientLink
+                      href={`/products/${product.handle}`}
+                      className="block py-2 hover:text-blue-600 transition-colors"
+                    >
+                      {product.title}
+                    </LocalizedClientLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </li>
+
 
           {/* Installations */}
           <li className="relative group">
-            <LocalizedClientLink href="/installation">Installations</LocalizedClientLink>
+            <LocalizedClientLink href={firstInstallation
+      ? `/installation/${firstInstallation.handle}`
+      : "#"
+  }>Installations</LocalizedClientLink>
 
-            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-64 py-3 z-50">
+            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
               <ul className="flex flex-col gap-2 px-4 text-sm text-black">
                 {installationCategories
                 .filter((category: any) => !category.parent_category_id)  // ✅ ONLY PARENTS
@@ -110,48 +148,62 @@ export default async function Nav() {
             </div>
           </li>
 
-          <li>
-            <LocalizedClientLink href="#">Support</LocalizedClientLink>
+          <li className="relative group">
+            <LocalizedClientLink href="/support">Support</LocalizedClientLink>
+            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
+              <ul className="flex flex-col gap-2 px-4 text-sm text-black">
+                <li>
+                  <LocalizedClientLink href="/rma">RMA</LocalizedClientLink>
+                </li>
+              </ul>
+            </div>
           </li>
           <li className="relative group">
             <LocalizedClientLink href="#">Resources</LocalizedClientLink>
             <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
               <ul className="flex flex-col gap-2 px-4 text-sm text-black">
                 <li>
-                  <LocalizedClientLink href="#">
-                    <span className="text-gray-400 cursor-not-allowed">Register your Products</span>
-                  </LocalizedClientLink>
-                </li>
-                <li>
                   <LocalizedClientLink href="/datasheet">Datasheets</LocalizedClientLink>
                 </li>
                 <li>
-                  <LocalizedClientLink href="#">
-                    <span className="text-gray-400 cursor-not-allowed">Product Videos</span>
-                  </LocalizedClientLink>
+                  <LocalizedClientLink href="/product-videos">Product Videos</LocalizedClientLink>
                 </li>
                 <li>
-                  <LocalizedClientLink href="#">
-                    <span className="text-gray-400 cursor-not-allowed">Training</span>
-                  </LocalizedClientLink>
+                  <LocalizedClientLink href="/training">Training</LocalizedClientLink>
                 </li>
                 <li>
-                  <LocalizedClientLink href="#">
-                    <span className="text-gray-400 cursor-not-allowed">Blogs</span>
-                  </LocalizedClientLink>
+                  <LocalizedClientLink href="/blogs">Blogs</LocalizedClientLink>
                 </li>
                 <li>
-                  <LocalizedClientLink href="#">
-                    <span className="text-gray-400 cursor-not-allowed">FAQ</span>
-                  </LocalizedClientLink>
+                  <LocalizedClientLink href="/faqs">FAQs</LocalizedClientLink>
                 </li>
               </ul>
             </div>
           </li>
 
-          <li>
-            <LocalizedClientLink href="#">About Us</LocalizedClientLink>
+          <li className="relative group">
+            <LocalizedClientLink href="/about-us">About Us</LocalizedClientLink>
+            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
+              <ul className="flex flex-col gap-2 px-4 text-sm text-black">
+                <li>
+                  <LocalizedClientLink href="/careers">Careers</LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/events">Events</LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/our-values">Our Values</LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/warranty-support">Warranty Support</LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/why-choose-us">Why Choose Us</LocalizedClientLink>
+                </li>
+              </ul>
+            </div>
           </li>
+
           <li>
             <LocalizedClientLink href="/contact-us">Contact Us</LocalizedClientLink>
           </li>

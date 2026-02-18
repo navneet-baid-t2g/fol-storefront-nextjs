@@ -7,7 +7,7 @@ import { Metadata } from "next";
 import { HttpTypes } from "@medusajs/types";
 import { CategoryImage } from "types/global";
 import ReactMarkdown from "react-markdown";
-
+import { BACKEND_URL } from "constant";
 
 import ProductCategoryCarousel from "../ProductCategoryCarousel";
 
@@ -60,26 +60,14 @@ export default async function Installation({ params }: Props) {
     })
   );
 
-  const BACKEND_URL = process.env.MEDUSA_BACKEND_URL || "https://api.fols.in";
 
   return (
     <>
-      {/* HEADER */}
-      <div className="relative h-64 bg-gradient-to-r from-gray-900 to-gray-700">
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
-          <h1 className="text-5xl font-bold text-white -mt-4 mb-4">{activeCategory.name}</h1>
-          <p className="text-l text-gray-200 max-w-8xl leading-relaxed">
-            {activeCategory.description || "Discover our complete range of products for this application."}
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="max-w-7xl mx-auto px-4 py-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Sidebar */}
           <aside className="lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white rounded-lg shadow-md p-6 sticky top-24 self-start">
               <h2 className="text-xl font-bold mb-4">Applications</h2>
               <nav className="space-y-2">
                 {categories
@@ -102,7 +90,20 @@ export default async function Installation({ params }: Props) {
           </aside>
 
           {/* Main Area */}
-          <main className="lg:col-span-9 space-y-10">
+          <main className="lg:col-span-9 space-y-4">
+
+            {/* Header (moved into main content) */}
+            <div className="bg-white rounded-lg p-4">
+              <div className="flex flex-col items-center">
+                <h1 className="text-2xl font-bold text-blue-600 mb-2 text-center">General Details for {activeCategory.name} Perimeter Security</h1>
+                <div className="max-w-4xl w-full mx-auto">
+                  <p className="text-base text-gray-700 leading-relaxed text-left">
+                    {activeCategory.description || "Discover our complete range of products for this application."}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {childProductsResults.map(({ child, products }) => {
               // Only first product image
               const firstProductImage = products[0]?.images?.[0]?.url
@@ -120,18 +121,37 @@ export default async function Installation({ params }: Props) {
 
               return (
                 <section key={child.id} className="bg-white rounded-lg shadow-md p-8">
-                  <h2 className="text-3xl font-bold text-blue-600 text-center mb-8">{child.name}</h2>
+                  <h2 className="text-2xl font-bold text-blue-600 text-center mb-8">{child.name}</h2>
 
-                  <div className="flex flex-col items-center gap-6 mb-8">
-                    <ProductCategoryCarousel
-                      productImage={firstProductImage || undefined}
-                      categoryImages={categoryImages}
-                      altProduct={firstProduct?.title || "Product Image"}
-                      altCategory={`${child.name} Category Image`}
-                    />
+                  {/* IMAGE ROW */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10 items-start">
+
+                    {/* LEFT: Product Image */}
+                    <div className="flex justify-center">
+                      <div className="w-[420px] bg-gray-50 rounded-xl shadow-md">
+                        {firstProductImage ? (
+                          <img
+                            src={firstProductImage}
+                            alt={firstProduct?.title || "Product Image"}
+                            className="block w-full max-h-[320px] object-contain"
+                          />
+                        ) : (
+                          <div className="h-[320px] flex items-center justify-center text-gray-400">
+                            No Product Image
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* RIGHT: Category Image + Dots */}
+                    <div className="flex justify-center">
+                      <ProductCategoryCarousel
+                        categoryImages={categoryImages}
+                        altCategory={`${child.name} Category Image`}
+                      />
+                    </div>
                   </div>
 
-                  
                   <div className="mb-10 px-4">
                     <div className="markdown">
                       <ReactMarkdown>{child.description}</ReactMarkdown>

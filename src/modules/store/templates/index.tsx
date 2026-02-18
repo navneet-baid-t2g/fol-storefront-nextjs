@@ -20,12 +20,12 @@ const StoreTemplate = ({
 
   return (
     <>
-      <div className="product-hero-banner">
+      {/*<div className="product-hero-banner">
         <div className="product-banner-overlay"></div>
         <div className="product-banner-content">
           <h1>All Products</h1>
         </div>
-      </div>
+      </div>*/}
       <div
         className="flex flex-col small:flex-row small:items-start py-6 content-container"
         data-testid="category-container"

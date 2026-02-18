@@ -267,14 +267,11 @@ nav.site-menu ul li a:hover::after {
 }
 
 
-footer {
-    color: #000000;
-    padding: 60px 0 40px 0;
-}
 
 .footer {
-    background: #ffffff url("/images/isometric-squares.svg") center/cover no-repeat;
-    color: #000000;
+    background: #0b0f1a url("/images/isometric-squares.svg") center/cover no-repeat;   /* dark navy */
+    color: #e5e7eb;   
+    padding: 60px 0 40px 0;
 }
 
 .footer-container {
@@ -326,17 +323,6 @@ footer {
     align-items: center;
     gap: 10px;
     margin-top: 15px;
-}
-
-footer .icon {
-    width: 28px;
-    height: 28px;
-    padding: 6px;
-    border-radius: 50%;
-    background-color: #0a1eb8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 footer .icon svg {
@@ -394,8 +380,8 @@ footer .social-links .social-link svg {
 }
 
 .bottom-footer {
-    background-color: #F4F4F4;
-    color: #000000;
+    background: #070a12;
+  color: #9ca3af;
 }
 
 .bottom-footer p {
@@ -530,6 +516,47 @@ footer .social-links .social-link svg {
 }
 
 
+.static-banner {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Your overlay */
+.static-banner {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.static-banner-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.static-banner-content h1 {
+  font-size: 36px;
+  margin: 0;              /* REMOVE default margin */
+  line-height: 1;         /* Important */
+  color: #222;
+}
 
 .market-content {
     padding: 16px
@@ -588,7 +615,7 @@ footer .social-links .social-link svg {
 
     header .btn-primary {
         background: #fff;
-        border: 2px solid #0a1eb8;
+        border: 1px solid #0a1eb8;
         border-radius: 6px;
         padding: 10px 14px;
         transition: all .2s;
@@ -657,6 +684,18 @@ footer .social-links .social-link svg {
 
 
 
+
+.swiper-pagination {
+  position: relative;
+  bottom: 8px !important;   /* reduce gap */
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.swiper-pagination-bullets {
+  margin-top:4px;
+}
 
 
 

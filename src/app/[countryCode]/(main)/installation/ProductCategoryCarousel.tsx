@@ -1,62 +1,83 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
 import Image from "next/image";
+
 import "swiper/css";
 import "swiper/css/pagination";
 
-type CarouselProps = {
-  productImage?: string;
+type Props = {
   categoryImages?: string[];
-  altProduct?: string;
   altCategory?: string;
 };
 
 export default function ProductCategoryCarousel({
-  productImage,
   categoryImages = [],
-  altProduct = "Product Image",
   altCategory = "Category Image",
-}: CarouselProps) {
-  const slides = [];
+}: Props) {
+  const swiperRef = useRef<SwiperType | null>(null);
+  const [playing, setPlaying] = useState(true);
 
-  if (productImage) slides.push({ src: productImage, alt: altProduct });
-  slides.push(...categoryImages.map((src) => ({ src, alt: altCategory })));
+  const togglePlay = () => {
+    if (!swiperRef.current) return;
+    playing
+      ? swiperRef.current.autoplay.stop()
+      : swiperRef.current.autoplay.start();
+    setPlaying(!playing);
+  };
 
-  if (slides.length === 0) {
+  // No images
+  if (categoryImages.length === 0) {
     return (
-      <div className="w-64 h-64 rounded-lg bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center shadow-lg">
-        <span className="text-gray-500 text-lg text-center px-4">
-          No Image Available
-        </span>
+      <div className="w-[420px] h-[320px] bg-gray-100 rounded-xl flex items-center justify-center">
+        <span className="text-gray-400">No Category Image</span>
       </div>
     );
   }
 
+  // Single image (no dots)
+  if (categoryImages.length === 1) {
+    return (
+      <div className="w-[420px] bg-gray-50 rounded-xl shadow-md">
+        <Image
+          src={categoryImages[0]}
+          alt={altCategory}
+          width={420}
+          height={320}
+          className="block w-full max-h-[320px] object-contain"
+        />
+      </div>
+    );
+  }
+
+  // Multiple images → carousel
   return (
-    <Swiper
-      modules={[Pagination, Autoplay]}
-      pagination={{ clickable: true }}
-      autoplay={{ delay: 4000 }}
-      loop={slides.length > 1}
-      spaceBetween={10}
-      slidesPerView={1}
-      className="max-w-md w-full mx-auto"
-    >
-      {slides.map((slide, idx) => (
-        <SwiperSlide key={idx}>
-          <div className="flex justify-center">
-            <Image
-              src={slide.src}
-              alt={slide.alt}
-              width={400}
-              height={400}
-              className="w-full max-w-md h-auto object-contain rounded-lg shadow-lg bg-gray-50 p-4"
-            />
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className="w-[420px]" onClick={togglePlay}>
+      <Swiper
+        modules={[Pagination, Autoplay]}
+        onSwiper={(s) => (swiperRef.current = s)}
+        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
+        loop
+        className="pb-4" // minimal space ONLY for dots
+      >
+        {categoryImages.map((src, i) => (
+          <SwiperSlide key={i}>
+            <div className="bg-gray-50 rounded-xl shadow-md">
+              <Image
+                src={src}
+                alt={altCategory}
+                width={420}
+                height={320}
+                className="block w-full max-h-[320px] object-contain"
+              />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 }

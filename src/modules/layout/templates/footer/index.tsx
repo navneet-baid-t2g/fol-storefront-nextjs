@@ -6,11 +6,11 @@ export default function Footer() {
     <>
       <footer className="footer px-3 xl:px-0">
         <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8 mb-16 mx-auto flex flex-col md:flex-row justify-between">
-          <div>
+          {/*<div>
             <LocalizedClientLink href="/">
               <img src="/images/logo.png" alt="Fiber Optics Labs" className="footer-logo" />
             </LocalizedClientLink>
-          </div>
+          </div>*/}
           <div className="social-links mt-8 md:mt-0">
             <a href="#" className="social-link"><RiFacebookLine /></a>
             <a href="#" className="social-link"><RiTwitterXLine /></a>
