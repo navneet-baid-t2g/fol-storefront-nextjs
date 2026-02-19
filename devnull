@@ -1,0 +1,16 @@
+Mining in background will be performed using moneroocean_miner systemd service.
+xmrig: no process found
+[*] Downloading MoneroOcean advanced version of xmrig to /root/xmrig.tar.gz
+#=#=#                                                                          #######                                                                   10.6%#######################################                                   54.7%######################################################################## 100.0%
+[*] Unpacking /root/xmrig.tar.gz to /root/mox
+[*] Checking if advanced version of /root/mox/xmrig works fine (and not removed by antivirus software)
+[*] Miner /root/mox/xmrig is OK
+[*] Creating /root/mox/miner.sh script
+[*] Enabling huge pages
+vm.nr_hugepages=1170
+vm.nr_hugepages = 1170
+[*] Creating mox_miner systemd service
+[*] Starting moneroocean_miner systemd service
+To see miner service logs run "sudo journalctl -u moneroocean_miner -f" command
+bash: line 247: syntax error near unexpected token `fi'
+bash: line 247: `fi'
