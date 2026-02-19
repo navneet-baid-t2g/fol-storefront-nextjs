@@ -144,9 +144,9 @@ export default function BecomeASalesPartner() {
   return (
     <>
       {/* === YOUR BANNER (unchanged) === */}
-      <div className="hero-banner">
-        <div className="overlay"></div>
-        <div className="banner-content">
+      <div className="static-banner">
+        <div className="static-banner-overlay"></div>
+        <div className="static-banner-content">
           <h1>Contact Us</h1>
         </div>
       </div>

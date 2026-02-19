@@ -35,6 +35,8 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
     return notFound()
   }
 
+  const videos = product?.metadata?.media_links ? product?.metadata?.media_links : []
+
   return (
     <>
       <div
@@ -75,11 +77,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
       >
         <Suspense fallback={<SkeletonRelatedProducts />}>
           <YoutubeVideos
-            videos={
-              product?.metadata?.media_links
-                ? product?.metadata?.media_links
-                : []
-            }
+            videos={Array.isArray(videos) ? videos : []}
           />
         </Suspense>
       </div>

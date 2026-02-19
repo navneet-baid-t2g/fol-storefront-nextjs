@@ -194,6 +194,17 @@ export default function MobileMenu({
                       RMA
                     </LocalizedClientLink>
                   </li>
+                  <li>
+                    <LocalizedClientLink href="/warranty-support" onClick={() => setOpen(false)}>
+                      Warranty Support
+                    </LocalizedClientLink>
+                  </li>
+                  <li>
+                    <LocalizedClientLink href="/our-commitment-to-support" onClick={() => setOpen(false)}>
+                      Our Commitment to Support
+                    </LocalizedClientLink>
+                  </li>
+
                 </ul>
               )}
             </li>
@@ -294,11 +305,7 @@ export default function MobileMenu({
                       Our Values
                     </LocalizedClientLink>
                   </li>
-                  <li>
-                    <LocalizedClientLink href="/warranty-support" onClick={() => setOpen(false)}>
-                      Warranty Support
-                    </LocalizedClientLink>
-                  </li>
+                  
                   <li>
                     <LocalizedClientLink href="/why-choose-us" onClick={() => setOpen(false)}>
                       Why Choose Us

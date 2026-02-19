@@ -155,6 +155,12 @@ const firstInstallation = parentInstallations[0]
                 <li>
                   <LocalizedClientLink href="/rma">RMA</LocalizedClientLink>
                 </li>
+                <li>
+                  <LocalizedClientLink href="/warranty-support">Warranty Support</LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/our-commitment-to-support">Our Commitment to Support</LocalizedClientLink>
+                </li>
               </ul>
             </div>
           </li>
@@ -193,9 +199,6 @@ const firstInstallation = parentInstallations[0]
                 </li>
                 <li>
                   <LocalizedClientLink href="/our-values">Our Values</LocalizedClientLink>
-                </li>
-                <li>
-                  <LocalizedClientLink href="/warranty-support">Warranty Support</LocalizedClientLink>
                 </li>
                 <li>
                   <LocalizedClientLink href="/why-choose-us">Why Choose Us</LocalizedClientLink>
