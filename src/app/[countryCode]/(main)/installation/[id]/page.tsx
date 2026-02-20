@@ -170,6 +170,12 @@ const sortedCategories = (categories as CategoryWithRank[])
                     </div>
                   </div>
 
+                  <div className="mb-10 px-4">
+                    <div className="markdown">
+                      <ReactMarkdown>{child.description}</ReactMarkdown>
+                    </div>
+                  </div>
+
                   {/* Product Links */}
                   {products.length > 0 ? (
                     <div className="grid gap-4">
