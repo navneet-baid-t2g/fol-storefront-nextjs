@@ -18,18 +18,22 @@ export default async function Nav() {
   const name = email?.split("@")[0]
 
   const { categories: installationCategories } = await listCategories()
-  
+
   // Fetch products - using the first region's ID
   const { response: productsResponse } = await listProducts({
     regionId: regions[0]?.id,
-    queryParams: { limit: 50 }, // Limit to 50 products for dropdown performance
+    queryParams: { limit: 50 },
   })
 
-  const parentInstallations = installationCategories.filter(
-  (category: any) => !category.parent_category_id
-)
+  // Sort parent installations
+  const parentInstallations = installationCategories
+    .filter((category: any) => !category.parent_category_id)
+    .sort((a: any, b: any) => a.rank - b.rank)
 
-const firstInstallation = parentInstallations[0]
+  // Deterministic first installation href
+  const firstInstallationHref = parentInstallations[0]
+    ? `/installation/${parentInstallations[0].handle}`
+    : "/installation/default"
 
   return (
     <>
@@ -40,6 +44,7 @@ const firstInstallation = parentInstallations[0]
           <MobileMenu
             products={productsResponse.products}
             installationCategories={installationCategories}
+            firstInstallationHref={firstInstallationHref}
           />
 
           {/* Logo */}
@@ -85,7 +90,6 @@ const firstInstallation = parentInstallations[0]
             <LocalizedClientLink
               href="/become-a-sales-partner"
               className="hidden xl:flex items-center justify-center px-[18px] py-[10px] text-sm rounded-[6px] border border-gray-300 hover:border-[#0a1eb8] transition whitespace-nowrap"
-
             >
               Become a Sales Partner
             </LocalizedClientLink>
@@ -100,50 +104,47 @@ const firstInstallation = parentInstallations[0]
             <LocalizedClientLink href="/">Home</LocalizedClientLink>
           </li>
           <li className="relative group">
-            <LocalizedClientLink href="/store">
-              Products
-            </LocalizedClientLink>
+            <LocalizedClientLink href="/store">Products</LocalizedClientLink>
 
             {/* Products Dropdown */}
             <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1 max-h-96 overflow-y-auto">
               <ul className="flex flex-col gap-2 px-4 text-sm text-black">
-                {productsResponse.products.map((product: any) => (
-                  <li key={product.id}>
-                    <LocalizedClientLink
-                      href={`/products/${product.handle}`}
-                      className="block py-2 hover:text-blue-600 transition-colors"
-                    >
-                      {product.title}
-                    </LocalizedClientLink>
-                  </li>
-                ))}
+                {productsResponse.products
+                  .sort((a: any, b: any) =>
+                    a.title.localeCompare(b.title, undefined, { sensitivity: "base" })
+                  )
+                  .map((product: any) => (
+                    <li key={product.id}>
+                      <LocalizedClientLink
+                        href={`/products/${product.handle}`}
+                        className="block py-2 hover:text-blue-600 transition-colors"
+                      >
+                        {product.title}
+                      </LocalizedClientLink>
+                    </li>
+                  ))}
               </ul>
             </div>
           </li>
 
-
           {/* Installations */}
           <li className="relative group">
-            <LocalizedClientLink href={firstInstallation
-      ? `/installation/${firstInstallation.handle}`
-      : "#"
-  }>Installations</LocalizedClientLink>
-
+            <LocalizedClientLink href={firstInstallationHref}>Installations</LocalizedClientLink>
             <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
               <ul className="flex flex-col gap-2 px-4 text-sm text-black">
                 {installationCategories
-                .filter((category: any) => !category.parent_category_id)  // ✅ ONLY PARENTS
-                .map((category: any) => (
-                  <li key={category.id}>
-                    <LocalizedClientLink
-                      href={`/installation/${category.handle}`}
-                      className="block py-2 hover:text-blue-600 transition-colors"
-                    >
-                      {category.name}
-                    </LocalizedClientLink>
-                  </li>
-                ))}
-
+                  .filter((category: any) => !category.parent_category_id)
+                  .sort((a: any, b: any) => a.rank - b.rank)
+                  .map((category: any) => (
+                    <li key={category.id}>
+                      <LocalizedClientLink
+                        href={`/installation/${category.handle}`}
+                        className="block py-2 hover:text-blue-600 transition-colors"
+                      >
+                        {category.name}
+                      </LocalizedClientLink>
+                    </li>
+                  ))}
               </ul>
             </div>
           </li>
@@ -161,9 +162,13 @@ const firstInstallation = parentInstallations[0]
                 <li>
                   <LocalizedClientLink href="/our-commitment-to-support">Our Commitment to Support</LocalizedClientLink>
                 </li>
+                <li>
+                  <LocalizedClientLink href="/support-videos">Support Videos</LocalizedClientLink>
+                </li>
               </ul>
             </div>
           </li>
+
           <li className="relative group">
             <LocalizedClientLink href="#">Resources</LocalizedClientLink>
             <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
@@ -195,13 +200,16 @@ const firstInstallation = parentInstallations[0]
                   <LocalizedClientLink href="/careers">Careers</LocalizedClientLink>
                 </li>
                 <li>
-                  <LocalizedClientLink href="/events">Events</LocalizedClientLink>
+                  <LocalizedClientLink href="/events">Upcoming Events</LocalizedClientLink>
                 </li>
                 <li>
                   <LocalizedClientLink href="/our-values">Our Values</LocalizedClientLink>
                 </li>
                 <li>
                   <LocalizedClientLink href="/why-choose-us">Why Choose Us</LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/testimonials">Testimonials</LocalizedClientLink>
                 </li>
               </ul>
             </div>

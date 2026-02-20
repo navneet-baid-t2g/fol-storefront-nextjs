@@ -14,149 +14,75 @@ import GetQuoteButton from "@modules/common/components/get-quote"
 /**
  * @param {{
  *   products: any[],
- *   installationCategories: any[]
+ *   installationCategories: any[],
+ *   firstInstallationHref: string
  * }} props
  */
-export default function MobileMenu({
-  products = [],
-  installationCategories = [],
-}) {
-
+export default function MobileMenu({ products = [], installationCategories = [], firstInstallationHref }) {
   const [open, setOpen] = useState(false)
   const [openSection, setOpenSection] = useState(null)
-
-  const toggleSection = (section) => {
-    setOpenSection(openSection === section ? null : section)
-  }
+  const toggleSection = (section) => setOpenSection(openSection === section ? null : section)
 
   return (
     <>
       {/* Hamburger */}
-      <button
-        onClick={() => setOpen(true)}
-        className="xl:hidden absolute left-3 top-8 px-2 text-2xl"
-      >
+      <button onClick={() => setOpen(true)} className="xl:hidden absolute left-3 top-8 px-2 text-2xl">
         <RiMenuLine />
       </button>
 
       {/* Backdrop */}
-      <div
-        className={`fixed inset-0 bg-black/40 z-50 xl:hidden transition-opacity ${
-          open ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div
-          className={`bg-white w-72 h-full py-6 px-5 transition-transform ${
-            open ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
+      <div className={`fixed inset-0 bg-black/40 z-50 xl:hidden transition-opacity ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+        <div className={`bg-white w-72 h-full py-6 px-5 transition-transform ${open ? "translate-x-0" : "-translate-x-full"}`}>
           {/* Close */}
-          <button
-            onClick={() => setOpen(false)}
-            className="text-2xl absolute right-4 top-4"
-          >
+          <button onClick={() => setOpen(false)} className="text-2xl absolute right-4 top-4">
             <RiCloseLine />
           </button>
 
           {/* Logo */}
           <LocalizedClientLink href="/" onClick={() => setOpen(false)}>
-            <img src="/images/logo.png" className="w-[75%] mb-8" />
+            <img src="/images/logo.png" className="w-[75%] mb-8" alt="Logo" />
           </LocalizedClientLink>
 
-          {/* Menu */}
           <ul className="space-y-4 uppercase text-gray-700">
+            <li><LocalizedClientLink href="/" onClick={() => setOpen(false)}>Home</LocalizedClientLink></li>
 
-            <li>
-              <LocalizedClientLink href="/" onClick={() => setOpen(false)}>
-                Home
-              </LocalizedClientLink>
-            </li>
-
-            {/* PRODUCTS */}
             {/* PRODUCTS */}
             <li>
               <div className="flex justify-between items-center w-full">
-                
-                {/* Click on text → Go to Store */}
-                <LocalizedClientLink
-                  href="/store"
-                  onClick={() => setOpen(false)}
-                  className="flex-1"
-                >
-                  Products
-                </LocalizedClientLink>
-
-                {/* Click on arrow → Open dropdown */}
-                <button
-                  onClick={() => toggleSection("products")}
-                  className="p-1"
-                >
-                  <RiArrowDownSLine
-                    className={`transition-transform ${
-                      openSection === "products" ? "rotate-180" : ""
-                    }`}
-                  />
+                <LocalizedClientLink href="/store" onClick={() => setOpen(false)} className="flex-1">Products</LocalizedClientLink>
+                <button onClick={() => toggleSection("products")} className="p-1">
+                  <RiArrowDownSLine className={openSection === "products" ? "rotate-180 transition-transform" : "transition-transform"} />
                 </button>
               </div>
-
               {openSection === "products" && (
                 <ul className="mt-2 ml-3 space-y-2 text-sm normal-case">
-                  {products.map((product) => (
-                    <li key={product.id}>
-                      <LocalizedClientLink
-                        href={`/products/${product.handle}`}
-                        onClick={() => setOpen(false)}
-                      >
-                        {product.title}
-                      </LocalizedClientLink>
+                  {products.sort((a,b) => a.title.localeCompare(b.title, undefined, { sensitivity:"base" })).map(p => (
+                    <li key={p.id}>
+                      <LocalizedClientLink href={`/products/${p.handle}`} onClick={() => setOpen(false)}>{p.title}</LocalizedClientLink>
                     </li>
                   ))}
                 </ul>
               )}
             </li>
 
-
-            {/* INSTALLATIONS */}
             {/* INSTALLATIONS */}
             <li>
               <div className="flex justify-between items-center w-full">
-                
-                {/* Styled like other links but does nothing */}
-                <LocalizedClientLink
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
-                  className="flex-1"
-                >
-                  Installations
-                </LocalizedClientLink>
-
-                {/* Arrow → toggles dropdown */}
-                <button
-                  onClick={() => toggleSection("installations")}
-                  className="p-1"
-                >
-                  <RiArrowDownSLine
-                    className={`transition-transform ${
-                      openSection === "installations" ? "rotate-180" : ""
-                    }`}
-                  />
+                <LocalizedClientLink href={firstInstallationHref} className="flex-1" onClick={() => setOpen(false)}>Installations</LocalizedClientLink>
+                <button onClick={() => toggleSection("installations")} className="p-1">
+                  <RiArrowDownSLine className={openSection === "installations" ? "rotate-180 transition-transform" : "transition-transform"} />
                 </button>
               </div>
-
               {openSection === "installations" && (
                 <ul className="mt-2 ml-3 space-y-2 text-sm normal-case">
                   {installationCategories
-                    .filter((c) => !c.parent_category_id)
-                    .map((category) => (
-                      <li key={category.id}>
-                        <LocalizedClientLink
-                          href={`/installation/${category.handle}`}
-                          onClick={() => setOpen(false)}
-                        >
-                          {category.name}
-                        </LocalizedClientLink>
+                    .filter(c => !c.parent_category_id)
+                    .sort((a,b)=> a.rank - b.rank)
+                    .map(c => (
+                      <li key={c.id}>
+                        <LocalizedClientLink href={`/installation/${c.handle}`} onClick={() => setOpen(false)}>{c.name}</LocalizedClientLink>
                       </li>
-                    ))}
+                  ))}
                 </ul>
               )}
             </li>
@@ -164,51 +90,20 @@ export default function MobileMenu({
             {/* SUPPORT */}
             <li>
               <div className="flex justify-between items-center w-full">
-                <LocalizedClientLink
-                  href="/support"
-                  onClick={() => setOpen(false)}
-                  className="flex-1"
-                >
-                  Support
-                </LocalizedClientLink>
-
-                <button
-                  onClick={() => toggleSection("support")}
-                  className="p-1"
-                >
-                  <RiArrowDownSLine
-                    className={`transition-transform ${
-                      openSection === "support" ? "rotate-180" : ""
-                    }`}
-                  />
+                <LocalizedClientLink href="/support" className="flex-1" onClick={() => setOpen(false)}>Support</LocalizedClientLink>
+                <button onClick={() => toggleSection("support")} className="p-1">
+                  <RiArrowDownSLine className={openSection === "support" ? "rotate-180 transition-transform" : "transition-transform"} />
                 </button>
               </div>
-
               {openSection === "support" && (
                 <ul className="mt-2 ml-3 space-y-2 text-sm normal-case">
-                  <li>
-                    <LocalizedClientLink
-                      href="/rma"
-                      onClick={() => setOpen(false)}
-                    >
-                      RMA
-                    </LocalizedClientLink>
-                  </li>
-                  <li>
-                    <LocalizedClientLink href="/warranty-support" onClick={() => setOpen(false)}>
-                      Warranty Support
-                    </LocalizedClientLink>
-                  </li>
-                  <li>
-                    <LocalizedClientLink href="/our-commitment-to-support" onClick={() => setOpen(false)}>
-                      Our Commitment to Support
-                    </LocalizedClientLink>
-                  </li>
-
+                  <li><LocalizedClientLink href="/rma" onClick={() => setOpen(false)}>RMA</LocalizedClientLink></li>
+                  <li><LocalizedClientLink href="/warranty-support" onClick={() => setOpen(false)}>Warranty Support</LocalizedClientLink></li>
+                  <li><LocalizedClientLink href="/our-commitment-to-support" onClick={() => setOpen(false)}>Our Commitment to Support</LocalizedClientLink></li>
+                  <li><LocalizedClientLink href="/support-videos" onClick={() => setOpen(false)}>Support Videos</LocalizedClientLink></li>
                 </ul>
               )}
             </li>
-
 
             {/* RESOURCES */}
             <li>
@@ -297,7 +192,7 @@ export default function MobileMenu({
                   </li>
                   <li>
                     <LocalizedClientLink href="/events" onClick={() => setOpen(false)}>
-                      Events
+                      Upcoming Events
                     </LocalizedClientLink>
                   </li>
                   <li>
@@ -311,6 +206,11 @@ export default function MobileMenu({
                       Why Choose Us
                     </LocalizedClientLink>
                   </li>
+                  <li>
+                    <LocalizedClientLink href="/testimonials" onClick={() => setOpen(false)}>
+                      Testimonials
+                    </LocalizedClientLink>
+                  </li>
                 </ul>
               )}
             </li>
@@ -322,13 +222,11 @@ export default function MobileMenu({
             </li>
           </ul>
 
-          {/* Account */}
           <div className="mt-8 space-y-3">
             <div className="flex gap-2 items-center">
               <RiUserLine />
               <LocalizedClientLink href="/account">Sign In</LocalizedClientLink>
             </div>
-
             <div className="flex gap-2 items-center">
               <RiShoppingCartLine />
               <LocalizedClientLink href="/cart">Cart</LocalizedClientLink>
@@ -340,10 +238,7 @@ export default function MobileMenu({
           </div>
 
           <div className="mt-6">
-            <LocalizedClientLink
-              href="/become-a-sales-partner"
-              className="btn-primary w-full block text-center"
-            >
+            <LocalizedClientLink href="/become-a-sales-partner" className="btn-primary w-full block text-center">
               Become a Sales Partner
             </LocalizedClientLink>
           </div>

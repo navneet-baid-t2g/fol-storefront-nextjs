@@ -140,12 +140,12 @@ section {
     bottom: -8px;
     width: 80px;
     height: 6px;
-    background: #0a1eb8;
+    background: #007bff;
     border-radius: 6px;
 }
 
 .topbar {
-    background-color: #0a1eb8;
+    background-color: #007bff;
     color: #ffffff;
     padding-block: 8px;
     text-align: center;

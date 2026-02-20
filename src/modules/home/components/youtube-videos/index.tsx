@@ -5,14 +5,9 @@ import { Navigation, Pagination } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
+import {HOMEPAGE_VIDEOS} from "constant"
 
 export default function YoutubeVideos() {
-  const videos1 = [
-    "https://www.youtube.com/embed/tgbNymZ7vqY",
-    "https://www.youtube.com/embed/tgbNymZ7vqY",
-    "https://www.youtube.com/embed/tgbNymZ7vqY",
-    "https://www.youtube.com/embed/tgbNymZ7vqY",
-  ]
   return (
     <section className="px-3 xl:px-0">
       <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8">
@@ -33,7 +28,7 @@ export default function YoutubeVideos() {
           }}
           className="youtube-swiper"
         >
-          {videos1.map((src, index) => (
+          {HOMEPAGE_VIDEOS.map((src, index) => (
             <SwiperSlide key={index}>
               <div className="video-wrapper">
                 <iframe

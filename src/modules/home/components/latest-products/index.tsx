@@ -10,18 +10,26 @@ export default function LatestProducts() {
   const [products, setProducts] = useState<HttpTypes.StoreProduct[]>([])
 
   useEffect(() => {
-    if (!loading) return
+  if (!loading) return
 
-    sdk.store.product
-      .list({
-        limit: 4,
-        order: "-created_at", // latest first
-      })
-      .then(({ products: fetched }) => {
-        setProducts(fetched || [])
-        setLoading(false)
-      })
-  }, [loading])
+  sdk.store.product
+    .list({
+      limit: 4,
+      // order: "-created_at", // remove latest-first ordering
+    })
+    .then(({ products: fetched }) => {
+      if (fetched) {
+        // Sort alphabetically by product title
+        const sorted = fetched.sort((a, b) =>
+          a.title.localeCompare(b.title, undefined, { sensitivity: "base" })
+        )
+        setProducts(sorted)
+      } else {
+        setProducts([])
+      }
+      setLoading(false)
+    })
+}, [loading])
 console.log("product",products)
   return (
     <section className="products-section px-3 xl:px-0">

@@ -50,27 +50,27 @@ export default function Footer() {
           <div className="footer-col">
             <h3 className="footer-title">Information</h3>
             <ul className="footer-links">
-              <li>About Fiber Optics Labs</li>
-              <li>Fiber Optics Labs Difference</li>
-              <li>Testimonials</li>
-              <li>Event Calendar</li>
-              <li>Independent Sales Program</li>
-              <li>Datasheets</li>
-              <li>Manuals</li>
-              <li>Product Videos</li>
+              <li><a href="/about-us">About Fiber Optics Labs</a></li>
+              <li><a href="#">Fiber Optics Labs Difference</a></li>
+              <li><a href="/testimonials">Testimonials</a></li>
+              <li><a href="/events">Event Calendar</a></li>
+              <li><a href="/become-a-sales-partner">Independent Sales Program</a></li>
+              <li><a href="/datasheet">Datasheets</a></li>
+              <li><a href="#">Manuals</a></li>
+              <li><a href="/product-videos">Product Videos</a></li>
             </ul>
           </div>
 
           <div className="footer-col">
             <h3 className="footer-title">Customer Services</h3>
             <ul className="footer-links">
-              <li>Warranty Terms</li>
-              <li>RMA</li>
-              <li>Dealer Information</li>
-              <li>Dealer Application</li>
-              <li>Register Your Product</li>
-              <li>Blog</li>
-              <li>FAQ</li>
+              <li><a href="/warranty-support">Warranty Terms</a></li>
+              <li><a href="/rma">RMA</a></li>
+              <li><a href="#">Dealer Information</a></li>
+              <li><a href="#">Dealer Application</a></li>
+              <li><a href="#">Register Your Product</a></li>
+              <li><a href="/blogs">Blog</a></li>
+              <li><a href="/faqs">FAQ</a></li>
             </ul>
           </div>
 

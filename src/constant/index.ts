@@ -10,3 +10,8 @@ export const BANNER_SLIDES = [
     "/images/banner-7.jpeg",
     "/images/banner-8.jpeg",
   ];
+
+  export const HOMEPAGE_VIDEOS = [
+    "https://www.youtube.com/embed/VW67F5Bs0eU?si=itBbkVQEDT24BaA8",
+    "https://www.youtube.com/embed/KMwrBuHnEK8?si=lifNeb3C4yzqkr0E",
+  ]
