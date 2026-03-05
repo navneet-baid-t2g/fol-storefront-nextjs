@@ -120,15 +120,22 @@ export default function RMAForm() {
 
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-6">RMA (Return Merchandise Authorization)</h1>
-      <p className="mb-4 text-gray-600">
-        A customer service agent will be in touch with you within 24 hours.
-      </p>
+    <div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="static-banner">
+        <div className="static-banner-overlay"></div>
+        <div className="static-banner-content">
+          <h1>RMA (Return Merchandise Authorization)</h1>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl mx-auto p-6">
         {/* Product */}
         <div>
+
+        <p>
+        A customer service agent will be in touch with you within 24 hours.
+      </p>
           <label className="block mb-1 font-medium">Select Product</label>
           <select
             name="productId"
