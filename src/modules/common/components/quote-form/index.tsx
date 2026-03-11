@@ -25,22 +25,27 @@ const [verifying, setVerifying] = useState(false)
   })
 
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const { products: fetched } = await sdk.store.product.list({
-          limit: 100,
-          fields: "id,title",
-        })
-        setProducts(fetched || [])
-      } catch (err) {
-        console.error("Failed to load products", err)
-      } finally {
-        setLoading(false)
-      }
-    }
+  const loadProducts = async () => {
+    try {
+      const { products: fetched } = await sdk.store.product.list({
+        limit: 100,
+        fields: "id,title",
+      })
 
-    loadProducts()
-  }, [])
+      const sortedProducts = (fetched || []).sort((a, b) =>
+        a.title.localeCompare(b.title, undefined, { sensitivity: "base" })
+      )
+
+      setProducts(sortedProducts)
+    } catch (err) {
+      console.error("Failed to load products", err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  loadProducts()
+}, [])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -152,10 +157,14 @@ const verifyOtp = async () => {
 
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-6">Request a Quote</h1>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div>
+      <div className="static-banner">
+        <div className="static-banner-overlay"></div>
+        <div className="static-banner-content">
+          <h1>Request a Quote</h1>
+        </div>
+      </div>
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl mx-auto p-6">
         {/* Product */}
         <div>
           <label className="block mb-1 font-medium">Product</label>

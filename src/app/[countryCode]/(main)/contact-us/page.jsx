@@ -286,9 +286,9 @@ export default function BecomeASalesPartner() {
             {/* Opening Hours */}
             <h4 className="opening-title mt-6">Opening Hours:</h4>
             <div className="opening-hours space-y-1">
-              <p>MON TO THUR: 9:30 AM - 06:30 PM IST</p>
-              <p>FRI: 9:30 AM - 5:30 PM IST</p>
-              <p>SAT - SUN: Closed</p>
+              <p>MON TO FRI: 9:30 AM - 06:00 PM IST</p>
+              <p>SAT: 9:30 AM - 5:00 PM IST</p>
+              <p>SUN: Closed</p>
             </div>
           </div>
         </div>

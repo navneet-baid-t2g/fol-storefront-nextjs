@@ -170,21 +170,25 @@ export default function BecomeASalesPartner() {
   return (
     <>
       {/* === YOUR BANNER (unchanged) === */}
-      <div className="hero-banner">
-        <div className="overlay"></div>
-        <div className="banner-content">
-          <h1>Become A Sales Partner</h1>
-          <p>
+      <div className="static-banner">
+        <div className="static-banner-overlay">
+          <div className="static-banner-content">
+            <h1>Become A Sales Partner</h1>
+          </div>
+         </div>
+      </div>
+      <div className="space-y-4 max-w-2xl mx-auto p-6 text-center">
+      <p>
             Unlock new earning opportunities & promote high-quality products,
             enjoy competitive commissions, and grow your business with full support,
             marketing resources, and training for long-term success.
           </p>
           <Link href="#register" className="banner-btn">Register as Dealer</Link>
-        </div>
-      </div>
-
+       </div>
+      
       {/* === FORM SECTION === */}
       <div className="max-w-8xl mx-auto">
+        
         <div className="sales-form-wrapper" id="register">
           <h2 className="form-title bordered">Start Your Sales Partnership</h2>
           <p className="form-subtitle mt-4">

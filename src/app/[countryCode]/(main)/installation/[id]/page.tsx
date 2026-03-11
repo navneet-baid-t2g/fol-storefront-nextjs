@@ -7,9 +7,10 @@ import { Metadata } from "next";
 import { HttpTypes } from "@medusajs/types";
 import { CategoryImage } from "types/global";
 import ReactMarkdown from "react-markdown";
-import { BACKEND_URL } from "constant";
+import { BACKEND_URL, STRAPI_BASE_URL } from "constant";
 
 import ProductCategoryCarousel from "../ProductCategoryCarousel";
+import ProductImageWithZoom from "../ProductImageWithZoom";
 
 export type CategoryWithImages = HttpTypes.StoreProductCategory & {
   product_category_image?: CategoryImage[];
@@ -88,12 +89,12 @@ const sortedCategories = (categories as CategoryWithRank[])
           <aside className="lg:col-span-3">
             <div className="bg-white rounded-lg shadow-md p-6 sticky top-24 self-start">
               <h2 className="text-xl font-bold mb-4">Applications</h2>
-              <nav className="space-y-2">
+              <nav className="space-y-1">
                 {sortedCategories.map((category) => (
                   <Link
                     key={category.id}
                     href={`/${countryCode}/installation/${category.handle}`}
-                    className={`block px-4 py-3 rounded text-sm font-medium ${
+                    className={`block px-4 py-1.5 rounded text-sm font-medium ${
                       activeCategory.id === category.id
                         ? "bg-blue-600 text-white"
                         : "text-gray-700 hover:bg-gray-100"
@@ -111,7 +112,7 @@ const sortedCategories = (categories as CategoryWithRank[])
             {/* Header */}
             <div className="bg-white rounded-lg p-4">
               <div className="flex flex-col items-center">
-                <h1 className="text-2xl font-bold text-blue-600 mb-2 text-center">
+                <h1 className="text-xl font-bold text-blue-600 mb-2 text-center">
                   General Details for {activeCategory.name} Perimeter Security
                 </h1>
                 <div className="max-w-4xl w-full mx-auto">
@@ -140,25 +141,17 @@ const sortedCategories = (categories as CategoryWithRank[])
 
               return (
                 <section key={child.id} className="bg-white rounded-lg shadow-md p-8">
-                  <h2 className="text-2xl font-bold text-blue-600 text-center mb-8">{child.name}</h2>
+                  <h2 className="text-xl font-bold text-blue-600 text-left mb-8">{firstProduct.title}</h2>
+                  <h2 className="text-xl font-bold text-black text-center mb-8">{child.name}</h2>
 
                   {/* IMAGE ROW */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10 items-start">
                     {/* LEFT: Product Image */}
                     <div className="flex justify-center">
-                      <div className="w-[420px] bg-gray-50 rounded-xl shadow-md">
-                        {firstProductImage ? (
-                          <img
-                            src={firstProductImage}
-                            alt={firstProduct?.title || "Product Image"}
-                            className="block w-full max-h-[320px] object-contain"
-                          />
-                        ) : (
-                          <div className="h-[320px] flex items-center justify-center text-gray-400">
-                            No Product Image
-                          </div>
-                        )}
-                      </div>
+                      <ProductImageWithZoom
+                        src={firstProductImage}
+                        alt={firstProduct?.title || "Product Image"}
+                      />
                     </div>
 
                     {/* RIGHT: Category Image + Carousel */}

@@ -1,7 +1,7 @@
 import { listProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { notFound } from "next/navigation"
-import {ProductVideosProps} from "types/productVideos"
+import { ProductVideosProps } from "types/productVideos"
 
 export default async function AllProductVideosPage({ params }: ProductVideosProps) {
   const region = await getRegion(params.countryCode)
@@ -17,19 +17,22 @@ export default async function AllProductVideosPage({ params }: ProductVideosProp
 
   const products = response?.products || []
 
-  const allVideos = products.flatMap((product) => {
-    const metadata = product.metadata as
-      | { media_links?: string[] }
-      | undefined
+  const allVideos: string[] = products.flatMap((product) => {
+  const metadata = product.metadata as
+    | { media_links?: string[] }
+    | undefined
 
-    return Array.isArray(metadata?.media_links)
-      ? metadata.media_links
-      : []
-  })
+  return Array.isArray(metadata?.media_links)
+    ? metadata.media_links
+    : []
+})
 
+const uniqueVideos = Array.from(new Set(allVideos))
+
+  
   return (
     <div>
-      {/* Hero Banner (UNCHANGED) */}
+      {/* Hero Banner */}
       <div className="static-banner">
         <div className="static-banner-overlay"></div>
         <div className="static-banner-content">
@@ -41,7 +44,7 @@ export default async function AllProductVideosPage({ params }: ProductVideosProp
       <div className="bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-16">
 
-          {allVideos.length === 0 ? (
+          {uniqueVideos.length === 0 ? (
             <div className="flex items-center justify-center min-h-[300px] text-center bg-white rounded-lg shadow-sm border">
               <p className="text-gray-500 text-lg">
                 No product videos available.
@@ -49,7 +52,7 @@ export default async function AllProductVideosPage({ params }: ProductVideosProp
             </div>
           ) : (
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {allVideos.map((video, index) => (
+              {uniqueVideos.map((video, index) => (
                 <div
                   key={index}
                   className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border"
@@ -61,7 +64,6 @@ export default async function AllProductVideosPage({ params }: ProductVideosProp
                       allowFullScreen
                     />
                   </div>
-
                 </div>
               ))}
             </div>

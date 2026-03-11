@@ -4,6 +4,12 @@ import { useEffect, useState } from "react"
 import { HttpTypes } from "@medusajs/types"
 import { sdk } from "@lib/config"
 import Link from "next/link"
+import { Swiper, SwiperSlide } from "swiper/react"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+
+import { Navigation, Pagination, Autoplay } from "swiper/modules"
 
 export default function LatestProducts() {
   const [loading, setLoading] = useState(true)
@@ -14,7 +20,7 @@ export default function LatestProducts() {
 
   sdk.store.product
     .list({
-      limit: 4,
+      //limit: 4,
       // order: "-created_at", // remove latest-first ordering
     })
     .then(({ products: fetched }) => {
@@ -59,27 +65,41 @@ console.log("product",products)
         )}
 
         {!loading && products.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={20}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{ 
+              delay: 5000,
+              disableOnInteraction: false,}}
+            breakpoints={{
+              320: { slidesPerView: 1 },
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 4 },
+            }}
+          >
             {products.map((product) => (
-              <Link
-                key={product.id}
-                href={`/products/${product.handle}`}
-                className="product-card block cursor-pointer transition hover:shadow-lg"
-              >
-                {product.thumbnail && (
-                  <img
-                    src={product.thumbnail}
-                    alt={product.title}
-                    className="product-image"
-                  />
-                )}
-                <div className="product-information">
-                  {/* <span className="product-model">Model: FOL-101</span> */}
-                  <h3 className="mt-4 mb-0 product-title">{product.title}</h3>
-                </div>
-              </Link>
+              <SwiperSlide key={product.id}>
+                <Link
+                  href={`/products/${product.handle}`}
+                  className="product-card block cursor-pointer transition hover:shadow-lg"
+                >
+                  {product.thumbnail && (
+                    <img
+                      src={product.thumbnail}
+                      alt={product.title}
+                      className="product-image"
+                    />
+                  )}
+
+                  <div className="product-information">
+                    <h3 className="mt-4 mb-0 product-title">{product.title}</h3>
+                  </div>
+                </Link>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         )}
       </div>
     </section>

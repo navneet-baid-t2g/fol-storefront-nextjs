@@ -1,15 +1,15 @@
 export const BACKEND_URL = "https://api.fols.in";
 export const STRAPI_BASE_URL = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL!;
 export const BANNER_SLIDES = [
-    "/images/banner-1.png",
-    "/images/banner-2.png",
-    "/images/banner-3.jpeg",
-    "/images/banner-4.jpeg",
-    "/images/banner-5.jpeg",
-    "/images/banner-6.jpeg",
-    "/images/banner-7.jpeg",
-    "/images/banner-8.jpeg",
+    "/images/banner-1.jpg",
+    "/images/banner-2.jpg",
+    "/images/banner-3.jpg",
+    "/images/banner-4.jpg",
+    "/images/banner-5.jpg",
+    "/images/banner-6.jpg",
   ];
+
+  export const LOGO_URL = "/images/logo.png";
 
   export const HOMEPAGE_VIDEOS = [
     "https://www.youtube.com/embed/VW67F5Bs0eU?si=itBbkVQEDT24BaA8",

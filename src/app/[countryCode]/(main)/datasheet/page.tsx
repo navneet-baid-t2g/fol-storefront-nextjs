@@ -18,14 +18,17 @@ const Resources: React.FC = () => {
 
         // Map and filter products that contain the datasheet_pdf key
         const dynamicDatasheets: DatasheetItem[] = response.products
-          .filter((p: HttpTypes.StoreProduct) => {
-            const metadata = p.metadata as ProductMetadata | null
-            return metadata?.datasheet_pdf
-          })
-          .map((p: HttpTypes.StoreProduct) => ({
-            name: p.title,
-            link: (p.metadata as ProductMetadata).datasheet_pdf!
-          }))
+  .filter((p: HttpTypes.StoreProduct) => {
+    const metadata = p.metadata as ProductMetadata | null
+    return metadata?.datasheet_pdf
+  })
+  .sort((a, b) =>
+    a.title.localeCompare(b.title, undefined, { sensitivity: "base" })
+  )
+  .map((p: HttpTypes.StoreProduct) => ({
+    name: p.title,
+    link: (p.metadata as ProductMetadata).datasheet_pdf!
+  }))
 
         setDatasheets(dynamicDatasheets)
       } catch (error) {

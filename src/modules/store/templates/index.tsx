@@ -16,24 +16,19 @@ const StoreTemplate = ({
   countryCode: string
 }) => {
   const pageNumber = page ? parseInt(page) : 1
-  const sort = sortBy || "created_at"
+
+  // Default alphabetical sorting
+  const sort = (sortBy || "title_asc") as SortOptions
 
   return (
     <>
-      {/*<div className="product-hero-banner">
-        <div className="product-banner-overlay"></div>
-        <div className="product-banner-content">
-          <h1>All Products</h1>
-        </div>
-      </div>*/}
       <div
         className="flex flex-col small:flex-row small:items-start py-6 content-container"
         data-testid="category-container"
       >
         {/* <RefinementList sortBy={sort} /> */}
+
         <div className="w-full">
-
-
           <Suspense fallback={<SkeletonProductGrid />}>
             <PaginatedProducts
               sortBy={sort}
@@ -42,7 +37,8 @@ const StoreTemplate = ({
             />
           </Suspense>
         </div>
-      </div></>
+      </div>
+    </>
   )
 }
 

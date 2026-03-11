@@ -10,6 +10,7 @@ import {
   RiArrowDownSLine,
 } from "@remixicon/react"
 import GetQuoteButton from "@modules/common/components/get-quote"
+import { LOGO_URL } from "constant"
 
 /**
  * @param {{
@@ -40,7 +41,7 @@ export default function MobileMenu({ products = [], installationCategories = [],
 
           {/* Logo */}
           <LocalizedClientLink href="/" onClick={() => setOpen(false)}>
-            <img src="/images/logo.png" className="w-[75%] mb-8" alt="Logo" />
+            <img src={LOGO_URL} className="w-[75%] mb-8" alt="Logo" />
           </LocalizedClientLink>
 
           <ul className="space-y-4 uppercase text-gray-700">
@@ -155,6 +156,11 @@ export default function MobileMenu({ products = [], installationCategories = [],
                       FAQs
                     </LocalizedClientLink>
                   </li>
+                  <li>
+                    <LocalizedClientLink href="/become-a-sales-partner">
+                      Become a Sales Partner
+                    </LocalizedClientLink>
+                  </li>
                 </ul>
               )}
             </li>
@@ -222,6 +228,10 @@ export default function MobileMenu({ products = [], installationCategories = [],
             </li>
           </ul>
 
+          <div className="mt-8">
+            <GetQuoteButton />
+          </div>
+
           <div className="mt-8 space-y-3">
             <div className="flex gap-2 items-center">
               <RiUserLine />
@@ -233,15 +243,6 @@ export default function MobileMenu({ products = [], installationCategories = [],
             </div>
           </div>
 
-          <div className="mt-8">
-            <GetQuoteButton />
-          </div>
-
-          <div className="mt-6">
-            <LocalizedClientLink href="/become-a-sales-partner" className="btn-primary w-full block text-center">
-              Become a Sales Partner
-            </LocalizedClientLink>
-          </div>
         </div>
       </div>
     </>

@@ -27,7 +27,7 @@ export default function QuoteButton({ product }: QuoteProps) {
     onClick={handleClick}
     className="btn-primary whitespace-nowrap"
   >
-    {email ? "Request a Quote" : "Sign in to Request a Quote"}
+    Request a Quote
   </button>
 )
 

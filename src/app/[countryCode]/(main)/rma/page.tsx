@@ -12,7 +12,7 @@ export default function RMAForm() {
     productId: "",
     full_name: "",
     business_name: "",
-    country: "United States",
+    country: "",
     phone: "",
     email: "",
     order_number: "",
@@ -24,20 +24,25 @@ export default function RMAForm() {
   })
 
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const { products: fetched } = await sdk.store.product.list({
-          limit: 100,
-          fields: "id,title",
-        })
-        setProducts(fetched || [])
-      } catch (err) {
-        console.error("Failed to load products", err)
-      }
-    }
+  const loadProducts = async () => {
+    try {
+      const { products: fetched } = await sdk.store.product.list({
+        limit: 100,
+        fields: "id,title",
+      })
 
-    loadProducts()
-  }, [])
+      const sortedProducts = (fetched || []).sort((a, b) =>
+        a.title.localeCompare(b.title, undefined, { sensitivity: "base" })
+      )
+
+      setProducts(sortedProducts)
+    } catch (err) {
+      console.error("Failed to load products", err)
+    }
+  }
+
+  loadProducts()
+}, [])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -100,7 +105,7 @@ export default function RMAForm() {
       productId: "",
       full_name: "",
       business_name: "",
-      country: "United States",
+      country: "",
       email: "",
       phone: "",
       order_number: "",
@@ -184,11 +189,13 @@ export default function RMAForm() {
           <select
             name="country"
             value={form.country}
+            required
             onChange={handleChange}
             className="w-full border rounded p-2"
           >
+            <option value="">Select</option>
+            <option>India</option>
             <option>United States</option>
-            <option>Canada</option>
             <option>Other</option>
           </select>
         </div>

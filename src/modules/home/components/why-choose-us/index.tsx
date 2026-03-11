@@ -38,7 +38,7 @@ export default function WhyChooseUs() {
         setOpenIndex(openIndex === index ? null : index);
     };
     return <div className="why-choose-us p-10 rounded-xl shadow-sm">
-        <h2 className="text-center">Why Choose Us?</h2>
+        <h2 className="text-center text-2xl">Why Choose Us?</h2>
 
 
         {accordionItems.map((item, index) => (

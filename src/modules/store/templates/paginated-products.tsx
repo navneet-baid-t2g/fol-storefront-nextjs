@@ -56,13 +56,18 @@ export default async function PaginatedProducts({
   }
 
   let {
-    response: { products, count },
-  } = await listProductsWithSort({
-    page,
-    queryParams,
-    sortBy,
-    countryCode,
-  })
+  response: { products, count },
+} = await listProductsWithSort({
+  page,
+  queryParams,
+  sortBy,
+  countryCode,
+})
+
+// Ensure alphabetical order
+products = products.sort((a, b) =>
+  a.title.localeCompare(b.title, undefined, { sensitivity: "base" })
+)
 
   const totalPages = Math.ceil(count / PRODUCT_LIMIT)
 

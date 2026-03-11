@@ -10,6 +10,8 @@ import { cookies as nextCookies } from "next/headers"
 import MobileMenu from "./mobile-menu"
 import { listCategories, listProducts } from "@lib/data/products"
 import GetQuoteButton from "@modules/common/components/get-quote"
+import { LOGO_URL } from "constant"
+
 
 export default async function Nav() {
   const regions = await listRegions()
@@ -50,7 +52,7 @@ export default async function Nav() {
           {/* Logo */}
           <div className="flex-1 flex items-center justify-start pl-12 xl:pl-0 xl:justify-start">
             <LocalizedClientLink href="/">
-              <img src="/images/logo.png" className="logo" alt="Logo" />
+              <img src={LOGO_URL} className="logo" alt="Logo" />
             </LocalizedClientLink>
           </div>
 
@@ -61,6 +63,10 @@ export default async function Nav() {
 
           {/* Right */}
           <div className="hidden md:flex items-center justify-end gap-x-3 xl:gap-x-4 flex-[1.1] whitespace-nowrap">
+            
+
+            <GetQuoteButton />
+
             <div className="flex items-center gap-2">
               <RiUserLine />
               {name ? (
@@ -85,21 +91,13 @@ export default async function Nav() {
               </Suspense>
             </div>
 
-            <GetQuoteButton />
-
-            <LocalizedClientLink
-              href="/become-a-sales-partner"
-              className="hidden xl:flex items-center justify-center px-[18px] py-[10px] text-sm rounded-[6px] border border-gray-300 hover:border-[#0a1eb8] transition whitespace-nowrap"
-            >
-              Become a Sales Partner
-            </LocalizedClientLink>
           </div>
         </header>
       </div>
 
       {/* Desktop Menu */}
       <nav className="hidden xl:block site-menu sticky top-0 inset-x-0 z-40 text-sm border-b border-gray-200 bg-white">
-        <ul className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8 flex justify-between py-3 uppercase tracking-wide text-ui-fg-subtle">
+        <ul className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8 flex justify-between py-2 uppercase tracking-wide text-ui-fg-subtle">
           <li>
             <LocalizedClientLink href="/">Home</LocalizedClientLink>
           </li>
@@ -108,7 +106,7 @@ export default async function Nav() {
 
             {/* Products Dropdown */}
             <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1 max-h-96 overflow-y-auto">
-              <ul className="flex flex-col gap-2 px-4 text-sm text-black">
+              <ul className="flex flex-col gap-2 px-4 text-sm text-black normal-case">
                 {productsResponse.products
                   .sort((a: any, b: any) =>
                     a.title.localeCompare(b.title, undefined, { sensitivity: "base" })
@@ -187,6 +185,9 @@ export default async function Nav() {
                 </li>
                 <li>
                   <LocalizedClientLink href="/faqs">FAQs</LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink href="/become-a-sales-partner">Become A Sales Partner</LocalizedClientLink>
                 </li>
               </ul>
             </div>

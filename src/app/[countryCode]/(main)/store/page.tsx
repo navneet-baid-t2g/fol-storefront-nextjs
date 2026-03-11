@@ -19,12 +19,12 @@ type Params = {
 }
 
 export default async function StorePage(props: Params) {
-  const params = await props.params;
-  const searchParams = await props.searchParams;
-  const { sortBy, page } = searchParams;
+  const params = await props.params
+  const searchParams = await props.searchParams
 
-  // Use alphabetical default
-  const sortOption = (sortBy || "title_asc") as SortOptions;
+  const { sortBy, page } = searchParams
+
+  const sortOption = (sortBy ?? "title_asc") as SortOptions
 
   return (
     <StoreTemplate

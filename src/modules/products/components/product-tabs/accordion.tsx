@@ -1,4 +1,4 @@
-import { Text, clx } from "@medusajs/ui"
+import { Text, clx, Heading } from "@medusajs/ui"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import React from "react"
 
@@ -56,7 +56,21 @@ const Item: React.FC<AccordionItemProps> = ({
         <div className="flex flex-col">
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-4">
-              <Text className="text-ui-fg-subtle text-sm">{title}</Text>
+              {headingSize === "large" && (
+                <Heading level="h3" className="text-lg font-semibold">
+                  {title}
+                </Heading>
+              )}
+
+              {headingSize === "medium" && (
+                <Heading level="h3" className="text-base font-semibold">
+                  {title}
+                </Heading>
+              )}
+
+              {headingSize === "small" && (
+                <Text className="text-ui-fg-subtle text-sm">{title}</Text>
+              )}
             </div>
             <AccordionPrimitive.Trigger>
               {customTrigger || <MorphingTrigger />}
