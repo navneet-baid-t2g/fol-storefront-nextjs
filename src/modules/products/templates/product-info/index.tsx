@@ -29,15 +29,6 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
     <div id="product-info">
       <div className="flex flex-col gap-y-4 mx-auto">
 
-        {product.collection && (
-          <LocalizedClientLink
-            href={`/collections/${product.collection.handle}`}
-            className="text-medium text-ui-fg-muted hover:text-ui-fg-subtle"
-          >
-            {product.collection.title}
-          </LocalizedClientLink>
-        )}
-
         <Accordion type="single" collapsible defaultValue="highlights">
 
           {/* Highlights */}

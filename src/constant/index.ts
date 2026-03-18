@@ -7,6 +7,7 @@ export const BANNER_SLIDES = [
     "/images/banner-4.jpg",
     "/images/banner-5.jpg",
     "/images/banner-6.jpg",
+    "/images/banner-7.jpg",
   ];
 
   export const LOGO_URL = "/images/logo.png";
@@ -14,4 +15,6 @@ export const BANNER_SLIDES = [
   export const HOMEPAGE_VIDEOS = [
     "https://www.youtube.com/embed/VW67F5Bs0eU?si=itBbkVQEDT24BaA8",
     "https://www.youtube.com/embed/KMwrBuHnEK8?si=lifNeb3C4yzqkr0E",
+    "https://www.youtube.com/embed/XRc79qIu1es?si=BjviUgDO15jnmuH0",
+    "https://www.youtube.com/embed/_tJZYfUiAiI?si=VsdnqFhRhmfsdz84",
   ]

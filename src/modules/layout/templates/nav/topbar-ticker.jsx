@@ -6,9 +6,10 @@ import "swiper/css";
 
 export default function TobBar() {
   const messages = [
-    "FR302 range is 100 km, 50 km per sensor, and 2 sensors per controller",
-    "FR302 range is 100 km, 50 km per sensor, and 2 sensors per controller",
-    "FR302 range is 100 km, 50 km per sensor, and 2 sensors per controller",
+    "Protect the fence or buried perimeters of your VIP house or small site (< 4km) using FOL-101 models at a cost-effective price",
+    "Our DAS products locate an intrusion within a few meters, offer cut immunity, and protects fence or buried perimeters up to 80 km",
+    "Protect your oil and gas pipeline from TPI with FR302 model with complete classifications based on AI for up to 100 km",
+    "For your high security sites, use our 100% intelligent redundant systems so that the protection never goes down",
   ];
 
   return (

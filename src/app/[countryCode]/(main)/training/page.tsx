@@ -62,7 +62,12 @@ export default function TrainingPage() {
             key={training.id}
             className="border rounded-xl p-6 shadow-sm bg-white"
           >
-            <div className="text-gray-700 prose prose-lg max-w-none">
+            <div
+  className="text-gray-700 prose prose-lg max-w-none
+  [&_ul]:!list-disc 
+  [&_ul]:!pl-6
+  [&_li]:!list-item"
+>
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {training.content}
               </ReactMarkdown>

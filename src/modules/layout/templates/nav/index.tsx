@@ -105,8 +105,8 @@ export default async function Nav() {
             <LocalizedClientLink href="/store">Products</LocalizedClientLink>
 
             {/* Products Dropdown */}
-            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1 max-h-96 overflow-y-auto">
-              <ul className="flex flex-col gap-2 px-4 text-sm text-black normal-case">
+            <div className="absolute left-0 top-full mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-md w-60 py-3 z-50 before:content-[''] before:absolute before:top-[-8px] before:left-0 before:w-full before:h-[8px]">
+              <ul className="flex flex-col gap-1 px-4 text-sm text-black normal-case">
                 {productsResponse.products
                   .sort((a: any, b: any) =>
                     a.title.localeCompare(b.title, undefined, { sensitivity: "base" })
@@ -115,7 +115,7 @@ export default async function Nav() {
                     <li key={product.id}>
                       <LocalizedClientLink
                         href={`/products/${product.handle}`}
-                        className="block py-2 hover:text-blue-600 transition-colors"
+                        className="block py-1 hover:text-blue-600 transition-colors"
                       >
                         {product.title}
                       </LocalizedClientLink>
@@ -128,8 +128,8 @@ export default async function Nav() {
           {/* Installations */}
           <li className="relative group">
             <LocalizedClientLink href={firstInstallationHref}>Installations</LocalizedClientLink>
-            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
-              <ul className="flex flex-col gap-2 px-4 text-sm text-black">
+            <div className="absolute left-0 top-full mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-md w-60 py-3 z-50 before:content-[''] before:absolute before:top-[-8px] before:left-0 before:w-full before:h-[8px]">
+              <ul className="flex flex-col gap-1 px-4 text-sm text-black max-h-[70vh] overflow-y-auto">
                 {installationCategories
                   .filter((category: any) => !category.parent_category_id)
                   .sort((a: any, b: any) => a.rank - b.rank)
@@ -137,7 +137,7 @@ export default async function Nav() {
                     <li key={category.id}>
                       <LocalizedClientLink
                         href={`/installation/${category.handle}`}
-                        className="block py-2 hover:text-blue-600 transition-colors"
+                        className="block py-1 leading-5 hover:text-blue-600 transition-colors"
                       >
                         {category.name}
                       </LocalizedClientLink>
@@ -149,7 +149,7 @@ export default async function Nav() {
 
           <li className="relative group">
             <LocalizedClientLink href="/support">Support</LocalizedClientLink>
-            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
+            <div className="absolute left-0 top-full mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-md w-60 py-3 z-50 before:content-[''] before:absolute before:top-[-8px] before:left-0 before:w-full before:h-[8px]">
               <ul className="flex flex-col gap-2 px-4 text-sm text-black">
                 <li>
                   <LocalizedClientLink href="/rma">RMA</LocalizedClientLink>
@@ -169,7 +169,7 @@ export default async function Nav() {
 
           <li className="relative group">
             <LocalizedClientLink href="#">Resources</LocalizedClientLink>
-            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
+            <div className="absolute left-0 top-full mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-md w-60 py-3 z-50 before:content-[''] before:absolute before:top-[-8px] before:left-0 before:w-full before:h-[8px]">
               <ul className="flex flex-col gap-2 px-4 text-sm text-black">
                 <li>
                   <LocalizedClientLink href="/datasheet">Datasheets</LocalizedClientLink>
@@ -195,7 +195,7 @@ export default async function Nav() {
 
           <li className="relative group">
             <LocalizedClientLink href="/about-us">About Us</LocalizedClientLink>
-            <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md w-60 py-3 z-50 transition-all duration-200 group-hover:mt-1">
+            <div className="absolute left-0 top-full mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-md w-60 py-3 z-50 before:content-[''] before:absolute before:top-[-8px] before:left-0 before:w-full before:h-[8px]">
               <ul className="flex flex-col gap-2 px-4 text-sm text-black">
                 <li>
                   <LocalizedClientLink href="/careers">Careers</LocalizedClientLink>

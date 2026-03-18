@@ -1,7 +1,28 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
 import { RiFacebookLine, RiInstagramLine, RiLinkedinLine, RiMailLine, RiMapPinLine, RiPhoneLine, RiTwitterXLine, RiYoutubeLine } from "@remixicon/react";
 
-export default function Footer() {
+
+export default async function Footer() {
+  const shopItems = [
+  "Zone Product",
+  "Medium Range Point Locating",
+  "Long Range Point Locating",
+  "Long Range Classification System",
+  "Single Mode Cable",
+  "Multimode Cable",
+  "Enclosures",
+]
+const res = await fetch(
+  `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/collections`,
+  {
+    headers: {
+      "x-publishable-api-key": process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY!,
+    },
+    next: { revalidate: 60 },
+  }
+)
+
+const { collections } = await res.json()
   return (
     <>
       <footer className="footer px-3 xl:px-0">
@@ -12,11 +33,11 @@ export default function Footer() {
             </LocalizedClientLink>
           </div>*/}
           <div className="social-links mt-8 md:mt-0">
-            <a href="#" className="social-link"><RiFacebookLine /></a>
-            <a href="#" className="social-link"><RiTwitterXLine /></a>
-            <a href="#" className="social-link"><RiLinkedinLine /></a>
-            <a href="#" className="social-link"><RiInstagramLine /></a>
-            <a href="#" className="social-link"><RiYoutubeLine /></a>
+            <a href="https://www.facebook.com/share/18Q7w43cYZ/?mibextid=wwXIfr" className="social-link"><RiFacebookLine /></a>
+            <a href="https://x.com/FiberLabs48831" className="social-link"><RiTwitterXLine /></a>
+            <a href="https://www.linkedin.com/in/aditya-kumar-singh-7b8299233?utm_source=share_via&utm_content=profile&utm_medium=member_ios" className="social-link"><RiLinkedinLine /></a>
+            <a href="https://www.instagram.com/fiberopticslabs?igsh=eGM1bnBjdGV5ZmQw" className="social-link"><RiInstagramLine /></a>
+            <a href="https://www.youtube.com/@FiberOpticsLabs" className="social-link"><RiYoutubeLine /></a>
           </div>
         </div>
         <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8 footer-container">
@@ -51,12 +72,11 @@ export default function Footer() {
             <h3 className="footer-title">Information</h3>
             <ul className="footer-links">
               <li><a href="/about-us">About Fiber Optics Labs</a></li>
-              <li><a href="#">Fiber Optics Labs Difference</a></li>
+              <li><a href="/why-choose-us">Fiber Optics Labs Difference</a></li>
               <li><a href="/testimonials">Testimonials</a></li>
               <li><a href="/events">Event Calendar</a></li>
-              <li><a href="/become-a-sales-partner">Independent Sales Program</a></li>
+              <li><a href="/events">Independent Sales Program</a></li>
               <li><a href="/datasheet">Datasheets</a></li>
-              <li><a href="#">Manuals</a></li>
               <li><a href="/product-videos">Product Videos</a></li>
             </ul>
           </div>
@@ -66,9 +86,7 @@ export default function Footer() {
             <ul className="footer-links">
               <li><a href="/warranty-support">Warranty Terms</a></li>
               <li><a href="/rma">RMA</a></li>
-              <li><a href="#">Dealer Information</a></li>
-              <li><a href="#">Dealer Application</a></li>
-              <li><a href="#">Register Your Product</a></li>
+              <li><a href="/become-a-sales-partner">Dealer Application</a></li>
               <li><a href="/blogs">Blog</a></li>
               <li><a href="/faqs">FAQ</a></li>
             </ul>
@@ -77,13 +95,55 @@ export default function Footer() {
           <div className="footer-col">
             <h3 className="footer-title">Shop</h3>
             <ul className="footer-links">
-              <li>Zone Product</li>
-              <li>Medium Range Point Locating</li>
-              <li>Long Range Point Locating</li>
-              <li>Long Range Classification System</li>
-              <li>Single Mode Cable</li>
-              <li>Multimode Cable</li>
-              <li>Enclosures</li>
+              {await Promise.all(
+                shopItems.map(async (item) => {
+                  const matchedCollection = collections?.find(
+                    (col: any) => col.title.toLowerCase() === item.toLowerCase()
+                  )
+
+                  if (!matchedCollection) {
+                    return (
+                      <li key={item}>
+                        <span>{item}</span>
+                      </li>
+                    )
+                  }
+
+                  // ✅ Fetch products of this collection
+                  const prodRes = await fetch(
+                    `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/products?collection_id=${matchedCollection.id}`,
+                    {
+                      headers: {
+                        "x-publishable-api-key":
+                          process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY!,
+                      },
+                      next: { revalidate: 60 },
+                    }
+                  )
+
+                  const { products } = await prodRes.json()
+
+                  // ✅ If only 1 product → go to product page
+                  if (products?.length === 1) {
+                    return (
+                      <li key={item}>
+                        <LocalizedClientLink href={`/products/${products[0].handle}`}>
+                          {item}
+                        </LocalizedClientLink>
+                      </li>
+                    )
+                  }
+
+                  // ✅ Else → go to collection page
+                  return (
+                    <li key={item}>
+                      <LocalizedClientLink href={`/collections/${matchedCollection.handle}`}>
+                        {item}
+                      </LocalizedClientLink>
+                    </li>
+                  )
+                })
+              )}
             </ul>
           </div>
         </div>
