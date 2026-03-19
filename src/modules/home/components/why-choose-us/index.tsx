@@ -54,7 +54,7 @@ export default function WhyChooseUs() {
   }
 
   return (
-    <div className="why-choose-us p-10 rounded-xl shadow-sm">
+    <div className="why-choose-us py-4 px-6 rounded-xl shadow-sm">
       <h2 className="text-center text-2xl mb-6">Why Choose Us?</h2>
 
       {items.map((item, index) => (
