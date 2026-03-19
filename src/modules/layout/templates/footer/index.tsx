@@ -35,7 +35,7 @@ const { collections } = await res.json()
           <div className="social-links mt-8 md:mt-0">
             <a href="https://www.facebook.com/share/18Q7w43cYZ/?mibextid=wwXIfr" className="social-link"><RiFacebookLine /></a>
             <a href="https://x.com/FiberLabs48831" className="social-link"><RiTwitterXLine /></a>
-            <a href="https://www.linkedin.com/in/aditya-kumar-singh-7b8299233?utm_source=share_via&utm_content=profile&utm_medium=member_ios" className="social-link"><RiLinkedinLine /></a>
+            <a href="https://www.linkedin.com/company/fiber-optics-labs-private-limited/" className="social-link"><RiLinkedinLine /></a>
             <a href="https://www.instagram.com/fiberopticslabs?igsh=eGM1bnBjdGV5ZmQw" className="social-link"><RiInstagramLine /></a>
             <a href="https://www.youtube.com/@FiberOpticsLabs" className="social-link"><RiYoutubeLine /></a>
           </div>

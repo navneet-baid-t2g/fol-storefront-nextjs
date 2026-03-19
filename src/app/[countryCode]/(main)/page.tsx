@@ -43,7 +43,7 @@ export default async function Home({
           <div className="section-header">
             <h2 className="bordered">Innovating Security</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-10">
             <div className="bg-gray p-8 rounded-xl shadow-sm">
               <p>
                 FIBER OPTICS LABS offers the most advanced products for smart fence and buried perimeter security, pipeline TPI, train monitoring, and data network cable security based on the probability of detection/classification and nuisance alarm rate, even in a severe weather. FIBER OPTICS LABS sensors use a highly sensitive technology based on artificial intelligence and pattern recognition to detect and classify every footstep signal from humans or large animals, manual digging, machine digging, pipeline leaks, underground tunneling, fence climbs and cuts, wall top climbs, trains, and vehicles, while rejecting nearby nuisance sources such as traffic and weather elements. The products are easy to operate and maintain, and based on fiber optic sensors.

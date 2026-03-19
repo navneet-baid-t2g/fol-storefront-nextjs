@@ -19,8 +19,12 @@ export default function ProductPrice({
   const selectedPrice = variant ? variantPrice : cheapestPrice
 
   if (!selectedPrice) {
-    return <div className="block w-32 h-9 bg-gray-100 animate-pulse" />
-  }
+  return (
+    <div className="text-sm text-gray-500">
+      Fill the <b>"Request a Quote"</b> form on the top bar to get the pricing.
+    </div>
+  )
+}
 
   return (
     <div className="flex flex-col text-ui-fg-base">

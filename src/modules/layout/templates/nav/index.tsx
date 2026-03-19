@@ -19,7 +19,11 @@ export default async function Nav() {
   const email = cookies.get("email")?.value
   const name = email?.split("@")[0]
 
-  const { categories: installationCategories } = await listCategories()
+  const { categories: installationCategories } = await listCategories({
+  queryParams: {
+    limit: 500,
+  },
+})
 
   // Fetch products - using the first region's ID
   const { response: productsResponse } = await listProducts({
@@ -131,8 +135,8 @@ export default async function Nav() {
             <div className="absolute left-0 top-full mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-md w-60 py-3 z-50 before:content-[''] before:absolute before:top-[-8px] before:left-0 before:w-full before:h-[8px]">
               <ul className="flex flex-col gap-1 px-4 text-sm text-black max-h-[70vh] overflow-y-auto">
                 {installationCategories
-                  .filter((category: any) => !category.parent_category_id)
-                  .sort((a: any, b: any) => a.rank - b.rank)
+                  .filter((category: any) => !category.parent_category)
+                  .sort((a: any, b: any) => (a.rank ?? 999) - (b.rank ?? 999))
                   .map((category: any) => (
                     <li key={category.id}>
                       <LocalizedClientLink
@@ -168,7 +172,7 @@ export default async function Nav() {
           </li>
 
           <li className="relative group">
-            <LocalizedClientLink href="#">Resources</LocalizedClientLink>
+            <LocalizedClientLink href="/datasheet">Resources</LocalizedClientLink>
             <div className="absolute left-0 top-full mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-md w-60 py-3 z-50 before:content-[''] before:absolute before:top-[-8px] before:left-0 before:w-full before:h-[8px]">
               <ul className="flex flex-col gap-2 px-4 text-sm text-black">
                 <li>
