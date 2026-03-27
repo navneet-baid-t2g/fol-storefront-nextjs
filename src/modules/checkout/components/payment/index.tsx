@@ -12,7 +12,7 @@ import PaymentContainer, {
 import Divider from "@modules/common/components/divider"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
-
+import RazorpayPaymentButton from "../payment-button/razorpay-payment-button"
 const Payment = ({
   cart,
   availablePaymentMethods,
@@ -39,14 +39,15 @@ const Payment = ({
   const isOpen = searchParams.get("step") === "payment"
 
   const setPaymentMethod = async (method: string) => {
-    setError(null)
-    setSelectedPaymentMethod(method)
-    if (isStripeLike(method)) {
-      await initiatePaymentSession(cart, {
-        provider_id: method,
-      })
-    }
-  }
+  setError(null)
+  setSelectedPaymentMethod(method)
+
+  console.log("SELECTED:", method)
+
+  await initiatePaymentSession(cart, {
+    provider_id: method, // ✅ dynamic (correct)
+  })
+}
 
   const paidByGiftcard =
     cart?.gift_cards && cart?.gift_cards?.length > 0 && cart?.total === 0
@@ -183,21 +184,11 @@ const Payment = ({
             data-testid="payment-method-error-message"
           />
 
-          <Button
-            size="large"
-            className="mt-6"
-            onClick={handleSubmit}
-            isLoading={isLoading}
-            disabled={
-              (isStripeLike(selectedPaymentMethod) && !cardComplete) ||
-              (!selectedPaymentMethod && !paidByGiftcard)
-            }
-            data-testid="submit-payment-button"
-          >
-            {!activeSession && isStripeLike(selectedPaymentMethod)
-              ? " Enter card details"
-              : "Continue to review"}
-          </Button>
+          <RazorpayPaymentButton
+  cart={cart}
+  session={activeSession}
+  notReady={!cart}
+/>
         </div>
 
         <div className={isOpen ? "hidden" : "block"}>

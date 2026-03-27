@@ -7,6 +7,8 @@ import { Button } from "@medusajs/ui"
 import { useElements, useStripe } from "@stripe/react-stripe-js"
 import React, { useState } from "react"
 import ErrorMessage from "../error-message"
+import { isRazorpay } from "@lib/constants"
+import RazorpayPaymentButton from "./razorpay-payment-button"
 
 type PaymentButtonProps = {
   cart: HttpTypes.StoreCart
@@ -27,21 +29,35 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
   const paymentSession = cart.payment_collection?.payment_sessions?.[0]
 
   switch (true) {
-    case isStripeLike(paymentSession?.provider_id):
-      return (
-        <StripePaymentButton
-          notReady={notReady}
-          cart={cart}
-          data-testid={dataTestId}
-        />
-      )
-    case isManual(paymentSession?.provider_id):
-      return (
-        <ManualTestPaymentButton notReady={notReady} data-testid={dataTestId} />
-      )
-    default:
-      return <Button disabled>Select a payment method</Button>
-  }
+  case isStripeLike(paymentSession?.provider_id):
+    return (
+      <StripePaymentButton
+        notReady={notReady}
+        cart={cart}
+        data-testid={dataTestId}
+      />
+    )
+
+  case isRazorpay(paymentSession?.provider_id):
+    return (
+      <RazorpayPaymentButton
+  cart={cart}
+  session={paymentSession}   // ✅ ADD THIS
+  notReady={notReady}
+/>
+    )
+
+  case isManual(paymentSession?.provider_id):
+    return (
+      <ManualTestPaymentButton
+        notReady={notReady}
+        data-testid={dataTestId}
+      />
+    )
+
+  default:
+    return <Button disabled>Select a payment method</Button>
+}
 }
 
 const StripePaymentButton = ({
