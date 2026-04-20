@@ -24,103 +24,12 @@ export default function BecomeASalesPartner() {
 
   const invalidEmailDomains = ["test.com", "invalid.com", "fake.com"];
 
-  const BASE_URL = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL;
-
-  const [otp, setOtp] = useState("")
-const [otpSent, setOtpSent] = useState(false)
-const [emailVerified, setEmailVerified] = useState(false)
-const [verifying, setVerifying] = useState(false)
-
-const isValidEmail = (email) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)
-}
-
-const handleSendOtp = async () => {
-  if (!form.email) {
-    alert("Enter email first");
-    return;
-  }
-
-  if (!isValidEmail(form.email)) {
-    alert("Enter a valid email address");
-    return;
-  }
-
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/email-otp`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-publishable-api-key":
-            process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
-        },
-        body: JSON.stringify({
-          email: form.email,
-          action: "send",
-        }),
-      }
-    );
-
-    if (!res.ok) throw new Error("Failed to send OTP");
-
-    setOtpSent(true);
-    alert("OTP sent to your email");
-  } catch (err) {
-    console.error(err);
-    alert("Failed to send OTP");
-  }
-};
-
-const handleVerifyOtp = async () => {
-  if (!otp) {
-    alert("Enter OTP");
-    return;
-  }
-
-  setVerifying(true);
-
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/email-otp`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-publishable-api-key":
-            process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
-        },
-        body: JSON.stringify({
-          email: form.email,
-          otp,
-          action: "verify",
-        }),
-      }
-    );
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data?.message || "Invalid OTP");
-    }
-
-    setEmailVerified(true);
-    alert("Email verified successfully!");
-  } catch (err) {
-    console.error(err);
-    alert(err.message || "Invalid OTP");
-  } finally {
-    setVerifying(false);
-  }
-};
-
   const validate = () => {
     let err = {};
     const nameRegex = /^[A-Za-z\s]{1,50}$/;
     const companyRegex = /^[A-Za-z0-9\s.,&()/-]{1,100}$/;
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    const phoneRegex = /^[6-9]\d{9}$/;
+    const phoneRegex = /^(?!.*--)(?:\+?[1-9]\d{0,2})?[-]?(?:\d[-]?){7,15}\d$/;
 
     // Trimmed values
     const f = { ...form };
@@ -187,46 +96,38 @@ const handleVerifyOtp = async () => {
 
     if (!validate()) return;
 
-    if (!emailVerified) {
-  alert("Please verify your email first");
-  return;
-}
-
     setIsSubmitting(true);
 
     try {
       // Get IP Address
-      let ipAddress = "0.0.0.0";
-
-try {
-  const ipRes = await fetch("https://api.ipify.org?format=json");
-  const ipData = await ipRes.json();
-  ipAddress = ipData?.ip || "0.0.0.0";
-} catch {
-  console.warn("IP fetch failed");
-}
+      const ipRes = await fetch("https://api.ipify.org?format=json");
+      const ipData = await ipRes.json();
 
       const payload = {
-  firstName: form.firstName.trim(),
-  lastName: form.lastName.trim(),
-  emailAddress: form.email.trim(),
-  phoneNumber: form.phone.trim(),
-  companyName: form.company.trim(),
-  salesExperience: form.experience,
-  referralSource: form.hearAbout,
-  message: form.message.trim(),
-  ipAddress,
-};
+        data: {
+          firstName: form.firstName.trim(),
+          lastName: form.lastName.trim(),
+          emailAddress: form.email.trim(),
+          phoneNumber: form.phone.trim(),
+          companyName: form.company.trim(),
+          salesExperience: form.experience,
+          referralSource: form.hearAbout,
+          message: form.message.trim(),
+          ipAddress: ipData?.ip || "0.0.0.0",
+        },
+      };
 
-const res = await fetch(`${BASE_URL}/sales-partners-enquiries`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    data: payload,
-  }),
-});
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL}/sales-partners-enquiries`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       if (!res.ok) {
         console.error(await res.text());
@@ -328,48 +229,15 @@ const res = await fetch(`${BASE_URL}/sales-partners-enquiries`, {
             {/* Email & Phone */}
             <div className="form-row">
               <div className="field">
-  <input
-    type="email"
-    placeholder="Email Address"
-    value={form.email}
-    onChange={(e) => {
-      setValue("email", e.target.value);
-      setEmailVerified(false);
-      setOtpSent(false);
-    }}
-  />
-
-  <button
-    type="button"
-    onClick={handleSendOtp}
-    disabled={!form.email}
-  >
-    Send OTP
-  </button>
-
-  {otpSent && !emailVerified && (
-    <>
-      <input
-        type="text"
-        placeholder="Enter OTP"
-        value={otp}
-        onChange={(e) => setOtp(e.target.value)}
-      />
-
-      <button
-        type="button"
-        onClick={handleVerifyOtp}
-        disabled={verifying}
-      >
-        {verifying ? "Verifying..." : "Verify"}
-      </button>
-    </>
-  )}
-
-  {emailVerified && (
-    <p style={{ color: "green" }}>✓ Email verified</p>
-  )}
-</div>
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className={errors.email ? "error-input" : ""}
+                  value={form.email}
+                  onChange={(e) => setValue("email", e.target.value)}
+                />
+                {errors.email && <p className="error-text">{errors.email}</p>}
+              </div>
 
               <div className="field">
                 <input
@@ -377,11 +245,7 @@ const res = await fetch(`${BASE_URL}/sales-partners-enquiries`, {
                   placeholder="Phone No."
                   className={errors.phone ? "error-input" : ""}
                   value={form.phone}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, "") // only digits
-                    setValue("phone", value)
-                  }}
-                  maxLength={10}
+                  onChange={(e) => setValue("phone", e.target.value)}
                 />
                 {errors.phone && <p className="error-text">{errors.phone}</p>}
               </div>

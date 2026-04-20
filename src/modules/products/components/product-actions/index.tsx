@@ -13,7 +13,6 @@ import ProductPrice from "../product-price"
 import MobileActions from "./mobile-actions"
 import { useRouter } from "next/navigation"
 import Cookies from "js-cookie"
-import { getProductPrice } from "@lib/util/get-product-price"
 
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct
@@ -63,16 +62,6 @@ export default function ProductActions({
       return isEqual(variantOptions, options)
     })
   }, [product.variants, options])
-
-  const priceData = getProductPrice({
-  product,
-  variantId: selectedVariant?.id,
-})
-
-const selectedPrice =
-  priceData?.variantPrice || priceData?.cheapestPrice || null
-
-const hasPrice = !!selectedPrice
 
   // update the options when a variant is selected
   const setOptionValue = (optionId: string, value: string) => {
@@ -137,30 +126,24 @@ const hasPrice = !!selectedPrice
 
   // add the selected variant to the cart
   const handleAddToCart = async () => {
-  if (!selectedVariant?.id) return null
+    if (!selectedVariant?.id) return null
 
-  // 👉 NEW: if no price → redirect
-  if (!hasPrice) {
-    router.push("/quote-form")
-    return
+    // Check if user is logged in
+    if (!email) {
+      setShowLoginDialog(true)
+      return
+    }
+
+    setIsAdding(true)
+
+    await addToCart({
+      variantId: selectedVariant.id,
+      quantity: 1,
+      countryCode,
+    })
+
+    setIsAdding(false)
   }
-
-  // existing login check
-  if (!email) {
-    setShowLoginDialog(true)
-    return
-  }
-
-  setIsAdding(true)
-
-  await addToCart({
-    variantId: selectedVariant.id,
-    quantity: 1,
-    countryCode,
-  })
-
-  setIsAdding(false)
-}
 
   const handleLoginRedirect = () => {
     // Redirect to login page
@@ -201,24 +184,22 @@ const hasPrice = !!selectedPrice
         <Button
           onClick={handleAddToCart}
           disabled={
-  !selectedVariant ||
-  !!disabled ||
-  isAdding ||
-  !isValidVariant ||
-  (hasPrice && !inStock)
-}
+            !inStock ||
+            !selectedVariant ||
+            !!disabled ||
+            isAdding ||
+            !isValidVariant
+          }
           variant="primary"
           className="w-full h-10 btn-secondary"
           isLoading={isAdding}
           data-testid="add-product-button"
         >
-          {!selectedVariant
-  ? "Select variant"
-  : !hasPrice
-  ? "Request a Quote"
-  : !inStock || !isValidVariant
-  ? "Out of stock"
-  : "Add to cart"}
+          {!selectedVariant && !options
+            ? "Select variant"
+            : !inStock || !isValidVariant
+            ? "Out of stock"
+            : "Add to cart"}
         </Button>
         <MobileActions
           product={product}
@@ -235,7 +216,7 @@ const hasPrice = !!selectedPrice
 
       {/* Login Required Dialog */}
       {showLoginDialog && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 loginpop">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
             <h2 className="text-xl font-semibold mb-4">Login Required</h2>
             <p className="text-gray-600 mb-6">

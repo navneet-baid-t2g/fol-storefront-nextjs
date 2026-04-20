@@ -23,8 +23,6 @@ export default function RMAForm() {
     file_url: "", // store file URL or file name
   })
 
-  const [errors, setErrors] = useState<any>({})
-
   useEffect(() => {
   const loadProducts = async () => {
     try {
@@ -53,50 +51,8 @@ export default function RMAForm() {
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-const validate = () => {
-    let err: any = {}
-
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    const phoneRegex = /^\d{10,13}$/
-
-    const f = { ...form }
-
-    // trim values
-    Object.keys(f).forEach((key) => {
-      if (typeof f[key as keyof typeof f] === "string") {
-        f[key as keyof typeof f] = (f[key as keyof typeof f] as string).trim()
-      }
-    })
-
-    // Product - Required
-    if (!f.productId) err.productId = "Please select a product"
-
-    // Full Name - Required, min 1 char
-    if (!f.full_name) err.full_name = "Full name is required"
-
-    // Country - Required
-    if (!f.country) err.country = "Please select a country"
-
-    // Phone - Required, 10-13 digits
-    if (!f.phone) err.phone = "Phone number is required"
-    else if (!phoneRegex.test(f.phone)) err.phone = "Enter valid 10-13 digit phone number"
-
-    // Email - Required, valid format
-    if (!f.email) err.email = "Email is required"
-    else if (!emailRegex.test(f.email)) err.email = "Enter a valid email address"
-
-    // Issue Description - Required, min 10 chars
-    if (!f.issue_description) err.issue_description = "Issue description is required"
-    else if (f.issue_description.length < 10) err.issue_description = "Minimum 10 characters required"
-
-    setErrors(err)
-    return Object.keys(err).length === 0
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
-  // ✅ Email validation
-if (!validate()) return
   setSubmitting(true)
 
   try {
@@ -200,9 +156,6 @@ if (!validate()) return
               </option>
             ))}
           </select>
-          {errors.productId && (
-  <p className="text-red-500 text-sm">{errors.productId}</p>
-)}
         </div>
 
         {/* Full Name */}
@@ -216,9 +169,6 @@ if (!validate()) return
             onChange={handleChange}
             className="w-full border rounded p-2"
           />
-          {errors.full_name && (
-  <p className="text-red-500 text-sm">{errors.full_name}</p>
-)}
         </div>
 
         {/* Business Name */}
@@ -241,40 +191,25 @@ if (!validate()) return
             value={form.country}
             required
             onChange={handleChange}
-            className={`w-full border rounded p-2 ${errors.country ? "border-red-500" : ""}`}
+            className="w-full border rounded p-2"
           >
             <option value="">Select</option>
             <option>India</option>
             <option>United States</option>
             <option>Other</option>
           </select>
-          {errors.country && (
-            <p className="text-red-500 text-sm">{errors.country}</p>
-          )}
         </div>
 
-{/* Phone */}
+        {/* Phone */}
         <div>
           <label className="block mb-1 font-medium">Phone</label>
           <input
             type="tel"
             name="phone"
-            required
             value={form.phone}
-            onChange={(e) => {
-              const value = e.target.value.replace(/\D/g, "") // remove non-digits
-              setForm((prev) => ({ ...prev, phone: value }))
-              // Clear error when user types
-              if (errors.phone) setErrors((prev: any) => ({ ...prev, phone: "" }))
-            }}
-            maxLength={13}
-            pattern="[0-9]{10,13}"
-            placeholder="Enter 10-13 digit phone number"
-            className={`w-full border rounded p-2 ${errors.phone ? "border-red-500" : ""}`}
+            onChange={handleChange}
+            className="w-full border rounded p-2"
           />
-          {errors.phone && (
-            <p className="text-red-500 text-sm">{errors.phone}</p>
-          )}
         </div>
 
         {/* Email */}
@@ -283,15 +218,11 @@ if (!validate()) return
           <input
             type="email"
             name="email"
+            required
             value={form.email}
             onChange={handleChange}
-            className={`w-full border rounded p-2 ${
-              errors.email ? "border-red-500" : ""
-            }`}
+            className="w-full border rounded p-2"
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email}</p>
-          )}
         </div>
 
         {/* Order Number */}
@@ -329,9 +260,6 @@ if (!validate()) return
             onChange={handleChange}
             className="w-full border rounded p-2"
           />
-          {errors.issue_description && (
-  <p className="text-red-500 text-sm">{errors.issue_description}</p>
-)}
         </div>
 
         {/* Additional Message */}

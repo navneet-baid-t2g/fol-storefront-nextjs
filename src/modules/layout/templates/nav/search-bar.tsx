@@ -65,7 +65,7 @@ export default function SearchBar() {
       <div className="flex search-container w-full">
         <input
           type="text"
-          placeholder="Search Products..."
+          placeholder="Search the store"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="w-full border border-gray-300 px-4 py-2 rounded-l-md focus:outline-none text-sm"

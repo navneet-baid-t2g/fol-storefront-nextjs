@@ -108,99 +108,89 @@ const sortedCategories = (categories as CategoryWithRank[])
           </aside>
 
           {/* Main Area */}
-          <main className="lg:col-span-9 space-y-4 w-full">
-  {/* Header */}
-  <div className="bg-white rounded-lg p-4">
-    <div className="flex flex-col">
-      <h1 className="text-xl font-bold text-blue-600 mb-2 text-left">
-        General Details for {activeCategory.name} Perimeter Security
-      </h1>
+          <main className="lg:col-span-9 space-y-4">
+            {/* Header */}
+            <div className="bg-white rounded-lg p-4">
+              <div className="flex flex-col items-center">
+                <h1 className="text-xl font-bold text-blue-600 mb-2 text-center">
+                  General Details for {activeCategory.name} Perimeter Security
+                </h1>
+                <div className="max-w-4xl w-full mx-auto">
+                  <p className="text-base text-gray-700 leading-relaxed text-left">
+                    {activeCategory.description || "Discover our complete range of products for this application."}
+                  </p>
+                </div>
+              </div>
+            </div>
 
-      <div className="w-full">
-        <p className="text-base text-gray-700 leading-relaxed text-left">
-          {activeCategory.description || "Discover our complete range of products for this application."}
-        </p>
-      </div>
-    </div>
-  </div>
+            {/* Child Categories */}
+            {childProductsResults.map(({ child, products }) => {
+              const firstProduct = products[0] || null;
 
-  {/* Child Categories */}
-  {childProductsResults.map(({ child, products }) => {
-    const firstProduct = products[0] || null;
+              // First product image
+              const firstProductImage = firstProduct?.images?.[0]?.url
+                ? firstProduct.images[0].url.startsWith("http")
+                  ? firstProduct.images[0].url
+                  : `${BACKEND_URL}${firstProduct.images[0].url}`
+                : null;
 
-    const firstProductImage = firstProduct?.images?.[0]?.url
-      ? firstProduct.images[0].url.startsWith("http")
-        ? firstProduct.images[0].url
-        : `${BACKEND_URL}${firstProduct.images[0].url}`
-      : null;
+              // Category images
+              const categoryImages: string[] = (child.product_category_image || []).map((img) =>
+                img.url.startsWith("http") ? img.url : `${BACKEND_URL}${img.url}`
+              );
 
-    const categoryImages = (child.product_category_image || []).map((img) =>
-      img.url.startsWith("http") ? img.url : `${BACKEND_URL}${img.url}`
-    );
+              return (
+                <section key={child.id} className="bg-white rounded-lg shadow-md p-8">
+                  <h2 className="text-xl font-bold text-blue-600 text-left mb-8">{firstProduct.title}</h2>
+                  <h2 className="text-xl font-bold text-black text-center mb-8">{child.name}</h2>
 
-    return (
-      <section key={child.id} className="bg-white rounded-lg shadow-md p-4">
-        
-        {/* Titles */}
-        <h2 className="text-xl font-bold text-blue-600 text-left mb-4">
-          {firstProduct?.title}
-        </h2>
+                  {/* IMAGE ROW */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10 items-start">
+                    {/* LEFT: Product Image */}
+                    <div className="flex justify-center">
+                      <ProductImageWithZoom
+                        src={firstProductImage}
+                        alt={firstProduct?.title || "Product Image"}
+                      />
+                    </div>
 
-        <h2 className="text-xl font-bold text-black text-left mb-6">
-          {child.name}
-        </h2>
+                    {/* RIGHT: Category Image + Carousel */}
+                    <div className="flex justify-center">
+                      <ProductCategoryCarousel
+                        categoryImages={categoryImages}
+                        altCategory={`${child.name} Category Image`}
+                      />
+                    </div>
+                  </div>
 
-        {/* IMAGE ROW */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10 items-start">
-          
-          {/* LEFT: Product Image */}
-          <div className="flex justify-start">
-            <ProductImageWithZoom
-              src={firstProductImage}
-              alt={firstProduct?.title || "Product Image"}
-            />
-          </div>
+                  <div className="mb-10 px-4">
+                    <div className="markdown">
+                      <ReactMarkdown>{child.description}</ReactMarkdown>
+                    </div>
+                  </div>
 
-          {/* RIGHT: Category Images */}
-          <div className="flex justify-start">
-            <ProductCategoryCarousel
-              categoryImages={categoryImages}
-              altCategory={`${child.name} Category Image`}
-            />
-          </div>
-        </div>
-
-        {/* Description */}
-        <div className="mb-10">
-          <div className="markdown text-left">
-            <ReactMarkdown>{child.description}</ReactMarkdown>
-          </div>
-        </div>
-
-        {/* Product Links */}
-        {products.length > 0 ? (
-          <div className="grid gap-4">
-            {products.map((product) => (
-              <Link
-                key={product.id}
-                href={`/${countryCode}/products/${product.handle}`}
-                className="block w-full max-w-md px-6 py-3 rounded-lg bg-blue-600 text-white font-semibold text-center hover:bg-blue-700 transition-all duration-200 shadow-md"
-              >
-                View {product.title}
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <div className="py-12 bg-gray-50 rounded-lg">
-            <p className="text-gray-500 text-left">
-              No products available for this application
-            </p>
-          </div>
-        )}
-      </section>
-    );
-  })}
-</main>
+                  {/* Product Links */}
+                  {products.length > 0 ? (
+                    <div className="grid gap-4">
+                      {products.map((product) => (
+                        <Link
+                          key={product.id}
+                          href={`/${countryCode}/products/${product.handle}`}
+                          className="block w-full max-w-md mx-auto text-center px-8 py-4 rounded-lg bg-blue-600 text-white font-semibold text-lg hover:bg-blue-700 transition-all duration-200 shadow-lg"
+                        >
+                          View {product.title}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12 bg-gray-50 rounded-lg shadow-inner">
+                      <p className="text-gray-500 text-lg">No products available for this application</p>
+                    </div>
+                  )}
+                </section>
+              );
+            })}
+          </main>
         </div>
       </div>
     </>
