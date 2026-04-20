@@ -11,6 +11,8 @@ import OptionSelect from "./option-select"
 import { HttpTypes } from "@medusajs/types"
 import { isSimpleProduct } from "@lib/util/product"
 
+import { useRouter } from "next/navigation"
+
 type MobileActionsProps = {
   product: HttpTypes.StoreProduct
   variant?: HttpTypes.StoreProductVariant
@@ -36,6 +38,8 @@ const MobileActions: React.FC<MobileActionsProps> = ({
 }) => {
   const { state, open, close } = useToggleState()
 
+  const router = useRouter()
+
   const price = getProductPrice({
     product: product,
     variantId: variant?.id,
@@ -49,6 +53,8 @@ const MobileActions: React.FC<MobileActionsProps> = ({
 
     return variantPrice || cheapestPrice || null
   }, [price])
+
+  const hasPrice = !!selectedPrice
 
   const isSimple = isSimpleProduct(product)
 
@@ -117,18 +123,26 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                 </div>
               </Button>}
               <Button
-                onClick={handleAddToCart}
-                disabled={!inStock || !variant}
-                className="w-full"
-                isLoading={isAdding}
-                data-testid="mobile-cart-button"
-              >
-                {!variant
-                  ? "Select variant"
-                  : !inStock
-                  ? "Out of stock"
-                  : "Add to cart"}
-              </Button>
+  onClick={() => {
+    if (!hasPrice) {
+      router.push("/quote-form")
+      return
+    }
+    handleAddToCart()
+  }}
+  disabled={!variant || (!inStock && hasPrice)}
+  className="w-full"
+  isLoading={isAdding}
+  data-testid="mobile-cart-button"
+>
+  {!variant
+    ? "Select variant"
+    : !hasPrice
+    ? "Request a Quote"
+    : !inStock
+    ? "Out of stock"
+    : "Add to cart"}
+</Button>
             </div>
           </div>
         </Transition>

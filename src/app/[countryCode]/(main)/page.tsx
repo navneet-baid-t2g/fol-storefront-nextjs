@@ -11,6 +11,8 @@ import { getRegion } from "@lib/data/regions"
 import LatestProducts from "@modules/home/components/latest-products";
 import InstalledSites from "@modules/home/components/installed-sites";
 import OurInstallations from "@modules/home/components/our-installations";
+import AnnouncementSlider from "@modules/home/components/announcement-slider";
+
 
 export const metadata: Metadata = {
   title: "Fiber Optics Labs",
@@ -38,6 +40,62 @@ export default async function Home({
   return (
     <>
       <HeroBanner />
+
+      <section className="px-3 xl:px-0 py-10">
+      <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8">
+        
+        <div className="section-header">
+            <h2 className="bordered">Announcement</h2>
+          </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 ">
+          
+          {/* Left Slider */}
+          <AnnouncementSlider
+            images={[
+              "/images/ISC-West.webp",
+              "/images/Award-2.webp",
+              "/images/Award-3.webp",
+            ]}
+          />
+
+          {/* Right Content */}
+          <div className="text-gray-700 leading-relaxed">
+            <p className="mb-4">
+              FiberRanger has been recognized at the <strong>2026 ISC West Security Conference</strong> in Las Vegas, USA, for the 
+              <strong> New Products and Solutions (NPS) Award</strong> in the category 
+              <strong> "Intrusion Detection and Prevention Solutions (Physical) — Wired or Wireless"</strong> 
+              for their <strong>FR300 System</strong>.
+            </p>
+
+            <p className="font-semibold mb-2">Key details regarding this award:</p>
+
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <strong>Award Winning Technology:</strong> The FR301-Redundant system (part of the FR300 series) protects up to 
+                100 km of perimeter (50 km per sensor) with an accuracy of +/- 5m.
+              </li>
+
+              <li>
+                <strong>Significance:</strong> The system features a 100% intelligent redundant controller that eliminates 
+                single points of failure by automatically switching to a backup system.
+              </li>
+
+              <li>
+                <strong>Application:</strong> FiberRanger products are used for high-security fencing, buried perimeters, 
+                pipeline protection, and data network security using AI and pattern recognition.
+              </li>
+
+              <li>
+                <strong>Showcase:</strong> The award was announced at the ISC West 2026 conference.
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
       <section className="px-3 xl:px-0">
         <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8">
           <div className="section-header">

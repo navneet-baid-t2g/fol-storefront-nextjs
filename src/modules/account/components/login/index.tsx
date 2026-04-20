@@ -17,10 +17,12 @@ const Login = ({ setCurrentView }: Props) => {
       className="max-w-sm w-full flex flex-col items-center"
       data-testid="login-page"
     >
-      <h1 className=" mb-6">Welcome Back</h1>
+      <h1 className="mb-6 text-xl font-semibold">Welcome Back</h1>
+
       <p className="text-center text-base-regular text-ui-fg-base mb-8">
         Sign in to access an enhanced shopping experience.
       </p>
+
       <form className="w-full" action={formAction}>
         <div className="flex flex-col w-full gap-y-2">
           <Input
@@ -32,6 +34,7 @@ const Login = ({ setCurrentView }: Props) => {
             required
             data-testid="email-input"
           />
+
           <Input
             label="Password"
             name="password"
@@ -40,8 +43,22 @@ const Login = ({ setCurrentView }: Props) => {
             required
             data-testid="password-input"
           />
+
+          {/* ✅ Forgot Password */}
+          <div className="flex justify-end mt-1">
+            <button
+              type="button"
+              onClick={() => setCurrentView(LOGIN_VIEW.MANAGE_PASSWORD)}
+              className="text-sm text-blue-600 hover:underline"
+              data-testid="forgot-password-button"
+            >
+              Forgot Password?
+            </button>
+          </div>
         </div>
+
         <ErrorMessage error={message} data-testid="login-error-message" />
+
         <SubmitButton
           data-testid="sign-in-button"
           className="w-full mt-6 btn-secondary"
@@ -49,6 +66,7 @@ const Login = ({ setCurrentView }: Props) => {
           Sign in
         </SubmitButton>
       </form>
+
       <span className="text-center text-ui-fg-base text-small-regular mt-6">
         Not a member?{" "}
         <button
