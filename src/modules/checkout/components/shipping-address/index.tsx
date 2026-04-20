@@ -92,6 +92,45 @@ const ShippingAddress = ({
     })
   }
 
+  const indianStates = [
+  "Andhra Pradesh",
+  "Arunachal Pradesh",
+  "Assam",
+  "Bihar",
+  "Chhattisgarh",
+  "Goa",
+  "Gujarat",
+  "Haryana",
+  "Himachal Pradesh",
+  "Jharkhand",
+  "Karnataka",
+  "Kerala",
+  "Madhya Pradesh",
+  "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
+  "Odisha",
+  "Punjab",
+  "Rajasthan",
+  "Sikkim",
+  "Tamil Nadu",
+  "Telangana",
+  "Tripura",
+  "Uttar Pradesh",
+  "Uttarakhand",
+  "West Bengal",
+  "Andaman and Nicobar Islands",
+  "Chandigarh",
+  "Dadra and Nagar Haveli and Daman and Diu",
+  "Delhi",
+  "Jammu and Kashmir",
+  "Ladakh",
+  "Lakshadweep",
+  "Puducherry"
+];
+
   return (
     <>
       {customer && (addressesInRegion?.length || 0) > 0 && (
@@ -173,14 +212,29 @@ const ShippingAddress = ({
           required
           data-testid="shipping-country-select"
         />
-        <Input
+        {/* <Input
           label="State / Province"
           name="shipping_address.province"
           autoComplete="address-level1"
           value={formData["shipping_address.province"]}
           onChange={handleChange}
           data-testid="shipping-province-input"
-        />
+        /> */}
+        <select
+  name="shipping_address.province"
+  value={formData["shipping_address.province"]}
+  onChange={handleChange}
+  className="w-full appearance-none rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-sm text-gray-700 outline-none focus:border-gray-400 focus:bg-white transition-colors duration-150"
+  required
+  data-testid="shipping-province-input"
+>
+  <option value="">Select State</option>
+  {indianStates.map((state) => (
+    <option key={state} value={state}>
+      {state}
+    </option>
+  ))}
+</select>
       </div>
       <div className="my-8">
         <Checkbox

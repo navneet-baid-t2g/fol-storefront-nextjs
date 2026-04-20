@@ -45,7 +45,43 @@ const [verifying, setVerifying] = useState(false)
   }
 
   loadProducts()
-}, [])
+  }, [])
+
+  // Get logged-in user's email from cookie and pre-fill
+  useEffect(() => {
+    try {
+      // Get all cookies
+      const cookies = document.cookie
+      
+      // Try to find email cookie (case insensitive)
+      const cookieList = cookies.split(";")
+      let emailValue = ""
+      
+      for (const cookie of cookieList) {
+        const [name, value] = cookie.trim().split("=")
+        if (name.toLowerCase() === "email") {
+          emailValue = value
+          break
+        }
+      }
+      
+      if (emailValue && emailValue !== "undefined" && emailValue !== "null" && emailValue !== "") {
+        // Decode URL encoding
+        let userEmail = ""
+        try {
+          userEmail = decodeURIComponent(emailValue)
+        } catch {
+          userEmail = emailValue // Use as-is if decode fails
+        }
+        
+        if (userEmail && userEmail.includes("@")) {
+          setForm(prev => ({ ...prev, email: userEmail }))
+        }
+      }
+    } catch (e) {
+      console.error("Error reading email cookie:", e)
+    }
+  }, [])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -54,8 +90,23 @@ const [verifying, setVerifying] = useState(false)
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
+  const isValidPhone = (phone: string) => {
+  return /^[6-9]\d{9}$/.test(phone)
+}
+
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
+
+  if (!isValidPhone(form.phone)) {
+    alert("Enter a valid 10-digit phone number")
+    return
+  }
+
+  if (!emailVerified) {
+    alert("Please verify your email first")
+    return
+  }
+
   setSubmitting(true)
 
   try {
@@ -63,13 +114,14 @@ const [verifying, setVerifying] = useState(false)
       (p) => p.id === form.productId
     )
 
-    await fetch(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/quote`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-publishable-api-key": process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY!,
+          "x-publishable-api-key":
+            process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY!,
         },
         body: JSON.stringify({
           product_id: form.productId,
@@ -83,48 +135,63 @@ const [verifying, setVerifying] = useState(false)
       }
     )
 
+    if (!res.ok) throw new Error("Submission failed")
+
     alert("Quote request submitted successfully!")
 
-    setForm({
-      productId: "",
-      company: "",
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-    })
   } catch (err) {
-    console.error("Quote submission failed", err)
     alert("Something went wrong. Please try again.")
   } finally {
     setSubmitting(false)
   }
 }
 
+const isValidEmail = (email: string) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)
+}
+
 const sendOtp = async () => {
-  if (!form.email) {
-    alert("Enter email first")
+  // Check if email is pre-filled from login
+  if (!form.email || !form.email.includes("@")) {
+    alert("Please login first - email not found")
+    return
+  }
+
+  // Validate phone number before sending OTP
+  if (!form.phone || form.phone.length < 10) {
+    alert("Please enter a valid 10-digit phone number first")
     return
   }
 
   try {
-    await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/email-otp`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "x-publishable-api-key": process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY!,
-  },
-  body: JSON.stringify({
-    email: form.email,
-    action: "send",
-  }),
-})
-
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/email-otp`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-publishable-api-key":
+            process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY!,
+        },
+        body: JSON.stringify({
+          email: form.email,
+          action: "send",
+        }),
+      }
+    )
+    
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}))
+      alert(`Failed to send OTP: ${errorData.message || res.statusText}`)
+      return
+    }
 
     setOtpSent(true)
     alert("OTP sent to your email")
+
   } catch (err) {
-    alert("Failed to send OTP")
+    console.error("OTP send error:", err)
+    alert("Failed to send OTP - check console for details")
   }
 }
 
@@ -132,29 +199,40 @@ const verifyOtp = async () => {
   setVerifying(true)
 
   try {
-    await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/email-otp`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "x-publishable-api-key": process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY!,
-  },
-  body: JSON.stringify({
-    email: form.email,
-    otp,
-    action: "verify",
-  }),
-})
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/email-otp`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-publishable-api-key":
+            process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY!,
+        },
+        body: JSON.stringify({
+          email: form.email,
+          otp,
+          action: "verify",
+        }),
+      }
+    )
 
+    const data = await res.json()
 
+    if (!res.ok) {
+      throw new Error(data?.message || "Invalid OTP")
+    }
+
+    // ✅ ONLY here it should pass
     setEmailVerified(true)
     alert("Email verified successfully!")
-  } catch (err) {
-    alert("Invalid OTP")
+
+  } catch (err: any) {
+    console.error(err)
+    alert(err.message || "Invalid OTP")
   } finally {
     setVerifying(false)
   }
 }
-
 
   return (
     <div>
@@ -209,21 +287,16 @@ const verifyOtp = async () => {
           />
         </div>
 
-        {/* Email */}
-        {/* Email */}
+{/* Email */}
 <div>
-  <label className="block mb-1 font-medium">Email</label>
+  <label className="block mb-1 font-medium">Email (Verified)</label>
   <div className="flex gap-2">
     <input
       type="email"
       name="email"
-      required
       value={form.email}
-      onChange={(e) => {
-        handleChange(e)
-        setEmailVerified(false)
-      }}
-      className="w-full border rounded p-2"
+      disabled={true}
+      className="w-full border rounded p-2 bg-gray-100"
     />
 
     <button
