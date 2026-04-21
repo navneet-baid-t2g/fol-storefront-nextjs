@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState } from "react"
+import { useActionState, useState } from "react"
 import Input from "@modules/common/components/input"
 import { LOGIN_VIEW } from "@modules/account/templates/login-template"
 import ErrorMessage from "@modules/checkout/components/error-message"
@@ -14,6 +14,21 @@ type Props = {
 
 const Register = ({ setCurrentView }: Props) => {
   const [message, formAction] = useActionState(signup, null)
+  const [phoneError, setPhoneError] = useState("")
+
+  const validatePhone = (phone: string): boolean => {
+  return /^\d{10,13}$/.test(phone)
+}
+
+const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const value = e.target.value
+
+  if (value.length > 0 && !validatePhone(value)) {
+    setPhoneError("Enter 10-13 digit phone number")
+  } else {
+    setPhoneError("")
+  }
+}
 
   return (
     <div
@@ -57,7 +72,14 @@ const Register = ({ setCurrentView }: Props) => {
             type="tel"
             autoComplete="tel"
             data-testid="phone-input"
+            required
+            onChange={handlePhoneChange}
+            maxLength={13}
+           
           />
+          {phoneError && (
+            <p className="text-red-500 text-sm">{phoneError}</p>
+          )}
           <Input
             label="Password"
             name="password"
