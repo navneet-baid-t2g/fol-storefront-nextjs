@@ -53,9 +53,9 @@ export default async function Home({
           {/* Left Slider */}
           <AnnouncementSlider
             images={[
+              "/images/Award-3.webp",
               "/images/ISC-West.webp",
               "/images/Award-2.webp",
-              "/images/Award-3.webp",
             ]}
           />
 

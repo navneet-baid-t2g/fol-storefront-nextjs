@@ -179,6 +179,9 @@ export default async function Nav() {
                   <LocalizedClientLink href="/datasheet">Datasheets</LocalizedClientLink>
                 </li>
                 <li>
+                  <LocalizedClientLink href="/certifications">Certifications</LocalizedClientLink>
+                </li>
+                <li>
                   <LocalizedClientLink href="/product-videos">Product Videos</LocalizedClientLink>
                 </li>
                 <li>

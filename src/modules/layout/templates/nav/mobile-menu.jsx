@@ -137,6 +137,11 @@ export default function MobileMenu({ products = [], installationCategories = [],
                     </LocalizedClientLink>
                   </li>
                   <li>
+                    <LocalizedClientLink href="/certifications" onClick={() => setOpen(false)}>
+                      Certifications
+                    </LocalizedClientLink>
+                  </li>
+                  <li>
                     <LocalizedClientLink href="/product-videos" onClick={() => setOpen(false)}>
                       Product Videos
                     </LocalizedClientLink>
