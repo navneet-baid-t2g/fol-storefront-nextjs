@@ -70,6 +70,10 @@ export async function signup(_currentState: unknown, formData: FormData) {
     phone: formData.get("phone") as string,
   }
 
+  if (!customerForm.phone || !/^\d{10,13}$/.test(customerForm.phone)) {
+    return "Invalid phone number. Please enter a 10-13 digit phone number."
+  }
+
   try {
     const token = await sdk.auth.register("customer", "emailpass", {
       email: customerForm.email,

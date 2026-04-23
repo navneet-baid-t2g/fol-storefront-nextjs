@@ -15,6 +15,7 @@ type Props = {
 const Register = ({ setCurrentView }: Props) => {
   const [message, formAction] = useActionState(signup, null)
   const [phoneError, setPhoneError] = useState("")
+  const [phone, setPhone] = useState("")
 
   const validatePhone = (phone: string): boolean => {
   return /^\d{10,13}$/.test(phone)
@@ -23,10 +24,20 @@ const Register = ({ setCurrentView }: Props) => {
 const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const value = e.target.value
 
+  setPhone(value)
+
   if (value.length > 0 && !validatePhone(value)) {
     setPhoneError("Enter 10-13 digit phone number")
   } else {
     setPhoneError("")
+  }
+}
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  if (!validatePhone(phone)) {
+    setPhoneError("Enter 10-13 digit phone number")
+    e.preventDefault()
+    return
   }
 }
 
@@ -42,7 +53,7 @@ const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         Create your Store Member profile, and get access to an enhanced
         shopping experience.
       </p>
-      <form className="w-full flex flex-col" action={formAction}>
+      <form className="w-full flex flex-col" onSubmit={handleSubmit} action={formAction}>
         <div className="flex flex-col w-full gap-y-2">
           <Input
             label="First name"
@@ -74,6 +85,7 @@ const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             data-testid="phone-input"
             required
             onChange={handlePhoneChange}
+            value={phone}
             maxLength={13}
            
           />
@@ -107,7 +119,7 @@ const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           </LocalizedClientLink>
           .
         </span>
-        <SubmitButton className="w-full mt-6 btn-secondary" data-testid="register-button">
+        <SubmitButton className="w-full mt-6 btn-secondary" data-testid="register-button" disabled={!!phoneError || !phone}>
           Join
         </SubmitButton>
       </form>
