@@ -96,6 +96,39 @@ export default async function Home({
       </div>
     </section>
 
+
+    <section className="px-3 xl:px-0 installed-sites-section">
+      <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8">
+        <div className="section-header mb-8">
+          <h2 className="bordered">Our Certifications</h2>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 max-w-2xl mx-auto">
+  <div className="text-center">
+    <img
+      src="/images/iso-27001.webp"
+      alt="ISO/IEC 27001 : 2022"
+      className="mx-auto"
+    />
+    <h5 className="pt-3">ISO/IEC 27001 : 2022</h5>
+  </div>
+
+  <div className="text-center">
+    <img
+      src="/images/iso-9001.webp"
+      alt="ISO 9001 : 2015"
+      className="mx-auto"
+    />
+    <h5 className="pt-3">ISO 9001 : 2015</h5>
+  </div>
+</div>
+
+        
+</div>
+    </section>
+
+    
+
       <section className="px-3 xl:px-0">
         <div className="mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8">
           <div className="section-header">
